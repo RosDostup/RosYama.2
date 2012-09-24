@@ -15,6 +15,12 @@ div.rCol .h .date { color: #aaa; font-style: italic; font-size: 0.85em; margin-r
 div.rCol .h .type { font-size: 1.15em; padding: 0 0 0 30px; background-repeat: no-repeat; background-position: left; height: 22px; line-height: 22px; margin-bottom:0.47em }
 div.rCol .h .address { background: url(/images/marker.gif) no-repeat 2px center; padding-left: 19px;}
 
+div.rCol .h .type_trafficlight {background-image: url("/images/defects/rosdostup/trafficlight.png");}
+div.rCol .h .type_paving {background-image: url("/images/defects/rosdostup/paving.png");}
+div.rCol .h .type_pandus {background-image: url("/images/defects/rosdostup/pandus.png");}
+div.rCol .h .type_door {background-image: url("/images/defects/rosdostup/door.png");}
+div.rCol .h .type_parking {background-image: url("/images/defects/rosdostup/parking.png");}
+
 div.rCol .h .type_crossing { background-image: url("/images/st1234/crossing.png"); }
 div.rCol .h .type_badroad { background-image: url("/images/st1234/badroad.png"); }
 div.rCol .h .type_holeonroad { background-image: url("/images/st1234/holeonroad.png"); }
@@ -219,8 +225,11 @@ div.rCol .before:after, div.rCol .after:after {
 	resize:none;
 	margin-bottom:10px;
 }
+<<<<<<< HEAD
 
 .answer_file{width: 105px; height: 150px; float:left; margin-right: 10px; text-align: right;}
 .answer_file .delfileBtn {position: absolute; width: 16px; margin-left: 92px;}
 .picture_info{padding:5px; border: 1px solid #DDD; border-color: #aaa; width: 555px; height: 15px; border-bottom:none;}
 .picture_info div, .picture_info .declarationBtn{float:left;}
+=======
+>>>>>>> daa3c71e9cdecb9e468f5167a6f7cc415d9331f9
