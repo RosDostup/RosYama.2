@@ -73,6 +73,8 @@ $socials=array( // You can change the providers and their classes.
 			);	
 
 $params=array(
+		// Path to Logo image
+		'logo_path'=>'/images/prj_specific/rosdostup/logout.png',
 		// this is used in contact page
 		'adminEmail'=>'admin@rosdostup.ru',
 		'YMapKey'=>'AKtzDVABAAAAbnnpfAIAZPFgkjAuQV52QNsahNkE7plr4F0AAAAAAAAAAAAyrGSHDyaYbEfL1i8AVZDhjT4VHQ==',
