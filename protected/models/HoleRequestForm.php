@@ -27,7 +27,7 @@ class HoleRequestForm extends CFormModel
 			// rememberMe needs to be a boolean
 			array('html, pdf, printAllPictures, showDescriptions', 'boolean'),
 			// password needs to be authenticated
-			array('form_type, to, from, postaddress, address, comment, signature, application_data, gibdd, gibdd_reply', 'length'),
+			array('form_type, to, from, postaddress, address, comment, signature, application_data'.(Yii::app()->params['gibddOn'] ? 'gibdd, gibdd_reply' : ''), 'length'),
 			array('holes', 'safe'),
 		);
 	}

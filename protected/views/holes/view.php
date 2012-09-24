@@ -41,9 +41,9 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 						<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_STATUS)).' '.Yii::t('holes_view', 'REQUEST_TO_PROSECUTOR_SENT') ?>
 					<? elseif($hole->DATE_SENT): ?> 
 						<?php if ($hole->requests_with_answers && $hole->STATE == 'gibddre') echo CHtml::encode(Y::dateFromTime($hole->requests_with_answers[0]->answers[0]->date)); ?>
-						<?php if (count($hole->requests) == 1) : ?>
+						<?php if (Yii::app()->params['gibddOn'] && count($hole->requests) == 1) : ?>
 							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> отправлен запрос в ГИБДД
-						<? else : ?>
+						<? elseif(Yii::app()->params['gibddOn']) : ?>
 							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> был отправлен первый запрос в ГИБДД 
 						<? endif; ?>	
 						<?php if ($hole->requests_with_answers && $hole->STATE == 'fixed') echo '<br />'.CHtml::encode(Y::dateFromTime($hole->requests_with_answers[0]->answers[0]->date)).' получен ответ ГИБДД'; ?>
@@ -254,7 +254,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					case 'achtung':
 					{
 						?>
-						<? if($hole->request_gibdd): ?>
+						<? if(Yii::app()->params['gibddOn'] && $hole->request_gibdd): ?>
 						<div class="cc" style="width:150px">
 							<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'), array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 							<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_12'), array('notsent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
@@ -293,9 +293,9 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 						<? if(!$hole->request_gibdd): ?><?php endif; ?>
 						<? if($hole->request_prosecutor): ?>
 						<div class="lc" style="width:150px">
-							<?php if($hole->request_gibdd && !$hole->request_gibdd->answers): ?>
+							<?php if(Yii::app()->params['gibddOn'] && $hole->request_gibdd && !$hole->request_gibdd->answers): ?>
 									<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'), array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>																		
-								<?php elseif($hole->request_gibdd && $hole->request_gibdd->answers): ?>
+								<?php elseif(Yii::app()->params['gibddOn'] && $hole->request_gibdd && $hole->request_gibdd->answers): ?>
 									<p><?php echo CHtml::link('Ещё ответ из ГИБДД', array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>									
 								<?php endif; ?>	
 						</div>
@@ -347,7 +347,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 							<?
 						}?>
 												
-						<? if($hole->request_gibdd && !$hole->request_gibdd->answers): ?>
+						<? if(Yii::app()->params['gibddOn'] && $hole->request_gibdd && !$hole->request_gibdd->answers): ?>
 							<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'), array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>						
 						<? elseif($hole->request_gibdd && $hole->request_gibdd->answers): ?>
 							<p><?php echo CHtml::link('Ещё ответ из ГИБДД', array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>						
@@ -375,7 +375,10 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 													 }',				 
 									))); */ ?>
 				<div id="gibdd_form"></div>
-				<?php $this->renderPartial('_form_gibdd',Array('hole'=>$hole, 'gibdd'=>$hole->gibdd)); 
+				<?php if(Yii::app()->params['gibddOn'])
+                    $this->renderPartial('_form_gibdd', Array('hole'=>$hole, 'gibdd'=>$hole->gibdd));
+                else
+                    $this->renderPartial('_form_gibdd', Array('hole'=>$hole));
 				?>
 				</div>
 			<?php else : ?>	
@@ -508,7 +511,8 @@ new Ya.share({
 					Array('class'=>'holes_pict','rel'=>'hole', 'title'=>CHtml::encode($hole->ADDRESS))); ?>
 			<? endforeach; ?>
 		</div>
-		<?php foreach($hole->requests_gibdd as $request): ?>
+		<?php if(Yii::app()->params['gibddOn'] && $hole->requests_gibdd):
+        foreach($hole->requests_gibdd as $request): ?>
 			<?php if($request->answers): ?>
 				<?php foreach($request->answers as $answer) : ?>		
 				<div class="after">
@@ -548,7 +552,8 @@ new Ya.share({
 				</div>
 				<?php endforeach; ?>	
 			<?php endif; ?>
-		<?php endforeach; ?>
+		<?php endforeach;
+        endif;?>
 		<?php if($hole['STATE'] == 'fixed'): ?>
 			<div class="after">
 				<? if($hole->pictures_fixed): ?>

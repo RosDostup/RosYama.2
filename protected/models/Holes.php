@@ -82,21 +82,21 @@ class Holes extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('USER_ID, ADDRESS, DATE_CREATED, TYPE_ID, gibdd_id', 'required'),
-			array('LATITUDE, LONGITUDE', 'required', 'message' => 'Поставьте метку на карте двойным щелчком мыши!'),	
-			array('GIBDD_REPLY_RECEIVED, PREMODERATED, TYPE_ID, NOT_PREMODERATED, archive, deleted, premoderator_id, deletor_id', 'numerical', 'integerOnly'=>true),
+			array('USER_ID, ADDRESS, DATE_CREATED, TYPE_ID'.(Yii::app()->params['gibddOn'] ? ', gibdd_id' : ''), 'required'),
+			array('LATITUDE, LONGITUDE', 'required', 'message' => 'Поставьте метку на карте двойным щелчком мыши!'),
+			array((Yii::app()->params['gibddOn'] ? 'GIBDD_REPLY_RECEIVED, ' : '').'PREMODERATED, TYPE_ID, NOT_PREMODERATED, archive, deleted, premoderator_id, deletor_id', 'numerical', 'integerOnly'=>true),
 			array('LATITUDE, LONGITUDE', 'numerical'),
 			array('USER_ID, STATE, DATE_CREATED, DATE_SENT, DATE_STATUS, ADR_SUBJECTRF, DATE_SENT_PROSECUTOR', 'length', 'max'=>10),
 			array('ADR_CITY', 'length', 'max'=>50),
 			array('STR_SUBJECTRF, username, description_locality, description_size', 'length'),
-			array('COMMENT1, COMMENT2, COMMENT_GIBDD_REPLY, deletepict, upploadedPictures, request_gibdd, showUserHoles', 'safe'),	
+			array((Yii::app()->params['gibddOn'] ? 'COMMENT1, COMMENT2, COMMENT_GIBDD_REPLY, deletepict, upploadedPictures, request_gibdd, showUserHoles' : 'COMMENT1, COMMENT2, COMMENT_GIBDD_REPLY, deletepict, upploadedPictures, showUserHoles'), 'safe'),
 			array('upploadedPictures', 'file', 'types'=>'jpg, jpeg, png, gif','maxFiles'=>10, 'allowEmpty'=>true, 'on' => 'update, import, fix'),
 			array('upploadedPictures', 'file', 'types'=>'jpg, jpeg, png, gif','maxFiles'=>10, 'allowEmpty'=>false, 'on' => 'insert'),
 			array('upploadedPictures', 'unsafe', 'on' => 'add'),
 			array('upploadedPictures', 'required', 'on' => 'insert, add', 'message' => 'Необходимо загрузить фотографии'),			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('ID, USER_ID, LATITUDE, LONGITUDE, ADDRESS, STATE, DATE_CREATED, DATE_SENT, DATE_STATUS, COMMENT1, COMMENT2, TYPE_ID, ADR_SUBJECTRF, ADR_CITY, COMMENT_GIBDD_REPLY, GIBDD_REPLY_RECEIVED, PREMODERATED, DATE_SENT_PROSECUTOR', 'safe', 'on'=>'search'),
+			array((Yii::app()->params['gibddOn'] ? 'ID, USER_ID, LATITUDE, LONGITUDE, ADDRESS, STATE, DATE_CREATED, DATE_SENT, DATE_STATUS, COMMENT1, COMMENT2, TYPE_ID, ADR_SUBJECTRF, ADR_CITY, COMMENT_GIBDD_REPLY, GIBDD_REPLY_RECEIVED, PREMODERATED, DATE_SENT_PROSECUTOR' : 'ID, USER_ID, LATITUDE, LONGITUDE, ADDRESS, STATE, DATE_CREATED, DATE_SENT, DATE_STATUS, COMMENT1, COMMENT2, TYPE_ID, ADR_SUBJECTRF, ADR_CITY, PREMODERATED, DATE_SENT_PROSECUTOR'), 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -107,7 +107,7 @@ class Holes extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
+        $relations = array(
 			'subject'=>array(self::BELONGS_TO, 'RfSubjects', 'ADR_SUBJECTRF'),
 			'requests'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id'),
 			'requests_with_answers'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'with'=>'answers', 'condition'=>'answers.id > 0', 'order'=>'requests_with_answers.date_sent, answers.date'),
@@ -116,9 +116,7 @@ class Holes extends CActiveRecord
 			'pictures_fixed'=>array(self::HAS_MANY, 'HolePictures', 'hole_id', 'condition'=>'pictures_fixed.type="fixed" AND pictures_fixed.premoderated=1','order'=>'pictures_fixed.ordering'),
 			'user_pictures_fixed'=>array(self::HAS_MANY, 'HolePictures', 'hole_id', 'condition'=>'user_pictures_fixed.type="fixed" AND user_pictures_fixed.user_id='.Yii::app()->user->id,'order'=>'user_pictures_fixed.ordering'),
 			'pictures_fixed_not_moderated'=>array(self::HAS_MANY, 'HolePictures', 'hole_id', 'condition'=>'pictures_fixed_not_moderated.type="fixed" AND pictures_fixed_not_moderated.premoderated=0','order'=>'pictures_fixed_not_moderated.ordering'),
-			'request_gibdd'=>array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'condition'=>'request_gibdd.type="gibdd" AND request_gibdd.user_id='.Yii::app()->user->id),
 			'request_prosecutor'=>array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'condition'=>'request_prosecutor.type="prosecutor" AND user_id='.Yii::app()->user->id),
-			'requests_gibdd'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'condition'=>'requests_gibdd.type="gibdd"','order'=>'requests_gibdd.date_sent ASC'),
 			'requests_prosecutor'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'condition'=>'requests_prosecutor.type="prosecutor"','order'=>'date_sent ASC'),
 			'requests_with_answer_comment'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'with'=>'answers','condition'=>'answers.comment !=""','order'=>'requests_with_answer_comment.date_sent DESC'),
 			'fixeds'=>array(self::HAS_MANY, 'HoleFixeds', 'hole_id','order'=>'fixeds.date_fix ASC'),
@@ -127,12 +125,18 @@ class Holes extends CActiveRecord
 			'user'=>array(self::BELONGS_TO, 'UserGroupsUser', 'USER_ID'),		
 			'moder'=>array(self::BELONGS_TO, 'UserGroupsUser', 'premoderator_id'),
 			'deletor'=>array(self::BELONGS_TO, 'UserGroupsUser', 'deletor_id'),
-			'gibdd'=>array(self::BELONGS_TO, 'GibddHeads', 'gibdd_id'),
 			'selected_lists'=>array(self::MANY_MANY, 'UserSelectedLists',
                '{{user_selected_lists_holes_xref}}(hole_id,list_id)'),
             'comments_cnt'=> array(self::STAT, 'Comment', 'owner_id', 'condition'=>'owner_name="Holes" AND status < 2'),   
             'comments'=> array(self::HAS_MANY, 'Comment', 'owner_id', 'condition'=>'owner_name="Holes"'), 
 		);
+
+        if(Yii::app()->params['gibddOn']) {
+            $relations['request_gibdd'] = array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'condition'=>'request_gibdd.type="gibdd" AND request_gibdd.user_id='.Yii::app()->user->id);
+            $relations['requests_gibdd'] = array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'condition'=>'requests_gibdd.type="gibdd"','order'=>'requests_gibdd.date_sent ASC');
+            $relations['gibdd'] = array(self::BELONGS_TO, 'GibddHeads', 'gibdd_id');
+        }
+        return $relations;
 	}
 	
 	public function behaviors(){
@@ -448,11 +452,11 @@ class Holes extends CActiveRecord
 			$request->attributes=Array(
 							'hole_id'=>$this->ID,
 							'user_id'=>Yii::app()->user->id,
-							//'gibdd_id'=>$this->subject ? $this->subject->gibdd->id : 0,
-							'gibdd_id'=>$this->gibdd_id,
 							'date_sent'=>time(),
 							'type'=>$type,
 							);
+            if(Yii::app()->params['gibddOn'])
+                $request->attributes['gibdd_id'] = $this->subject ? $this->subject->gibdd->id : 0;
 			if ($request->save()){
 			if ($type=='gibdd') if ($this->updateSetinprogress()) return true;
 			elseif ($type=='prosecutor') if ($this->updateToprosecutor()) return true;
@@ -490,7 +494,7 @@ class Holes extends CActiveRecord
 						{
 							$this->STATE = 'achtung';
 						}
-						if($this->GIBDD_REPLY_RECEIVED)
+						if(Yii::app()->params['gibddOn'] && $this->GIBDD_REPLY_RECEIVED)
 						{
 							$this->STATE = 'gibddre';
 						}
@@ -498,7 +502,7 @@ class Holes extends CActiveRecord
 						{
 							$this->STATE = 'prosecutor';
 						}
-						if(!$this->DATE_SENT)
+						if(Yii::app()->params['gibddOn'] && !$this->DATE_SENT)
 						{
 							$this->STATE = 'fresh';
 							if ($this->request_gibdd) $this->request_gibdd->delete();
@@ -513,7 +517,7 @@ class Holes extends CActiveRecord
 	
 	public function updateRevoke()
 	{
-			if(!$this->request_gibdd || $this->request_gibdd->answer)
+        if(!Yii::app()->params['gibddOn'] || (!$this->request_gibdd || $this->request_gibdd->answer))
 				{
 					return false;	
 				}
@@ -704,7 +708,8 @@ class Holes extends CActiveRecord
 		$criteria->compare('t.deleted',0);
 		$criteria->compare('t.STATE',$this->STATE,true);	
 		$criteria->compare('t.TYPE_ID',$this->TYPE_ID,false);
-		$criteria->compare('t.gibdd_id',$this->gibdd_id,false);
+        if(Yii::app()->params['gibddOn'])
+            $criteria->compare('t.gibdd_id', $this->gibdd_id, false);
 		$criteria->compare('type.alias',$this->type_alias,true);	
 		
 		if (!$user->userModel->relProfile->show_archive_holes) $criteria->compare('t.archive',0,false);
@@ -886,7 +891,8 @@ class Holes extends CActiveRecord
 		$criteria->compare('t.STATE',$this->STATE,true);	
 		$criteria->compare('t.TYPE_ID',$this->TYPE_ID,false);
 		$criteria->compare('type.alias',$this->type_alias,true);
-		$criteria->compare('t.gibdd_id',$this->gibdd_id,false);
+        if(Yii::app()->params['gibddOn'])
+            $criteria->compare('t.gibdd_id', $this->gibdd_id, false);
 		//
 		//$criteria->addCondition('t.USER_ID='.$userid);
 	
@@ -1015,7 +1021,8 @@ class Holes extends CActiveRecord
 		$criteria->compare('t.deleted',$this->deleted,false);
 		$criteria->compare('type.alias',$this->type_alias,true);
 		$criteria->compare('subject.name_full',$this->ADR_SUBJECTRF,true);
-		$criteria->compare('gibdd.name',$this->gibdd_id,true);
+        if(Yii::app()->params['gibddOn'])
+            $criteria->compare('gibdd.name', $this->gibdd_id, true);
 		$criteria->compare('t.ADR_CITY',$this->ADR_CITY,true);
 		$criteria->compare('t.COMMENT_GIBDD_REPLY',$this->COMMENT_GIBDD_REPLY,true);
 		$criteria->compare('t.GIBDD_REPLY_RECEIVED',$this->GIBDD_REPLY_RECEIVED);
