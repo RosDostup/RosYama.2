@@ -87,8 +87,8 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				</div>
 			</div>
 			<? endif; ?>
-			<? if(!Yii::app()->user->isGuest): ?>
-				<?php if ($hole->STATE !='fixed' && !$hole->request_gibdd) : ?>
+			<?php if(!Yii::app()->user->isGuest) : ?>
+				<?php if ($hole->STATE !='fixed' && empty($hole->request_gibdd)) : ?>
 				<div class="form">
 					Яму заделали? Есть фотографии? <a href="#" onclick="$('#upload_fixeds').toggle('slow'); return false;">Загрузи!</a>
 					<?php $form=$this->beginWidget('CActiveForm', array(
