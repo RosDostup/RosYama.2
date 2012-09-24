@@ -15,6 +15,12 @@ div.rCol .h .date { color: #aaa; font-style: italic; font-size: 0.85em; margin-r
 div.rCol .h .type { font-size: 1.15em; padding: 0 0 0 30px; background-repeat: no-repeat; background-position: left; height: 22px; line-height: 22px; margin-bottom:0.47em }
 div.rCol .h .address { background: url(/images/marker.gif) no-repeat 2px center; padding-left: 19px;}
 
+div.rCol .h .type_trafficlight {background-image: url("/images/defects/rosdostup/trafficlight.png");}
+div.rCol .h .type_paving {background-image: url("/images/defects/rosdostup/paving.png");}
+div.rCol .h .type_pandus {background-image: url("/images/defects/rosdostup/pandus.png");}
+div.rCol .h .type_door {background-image: url("/images/defects/rosdostup/door.png");}
+div.rCol .h .type_parking {background-image: url("/images/defects/rosdostup/parking.png");}
+
 div.rCol .h .type_crossing { background-image: url("/images/st1234/crossing.png"); }
 div.rCol .h .type_badroad { background-image: url("/images/st1234/badroad.png"); }
 div.rCol .h .type_holeonroad { background-image: url("/images/st1234/holeonroad.png"); }
