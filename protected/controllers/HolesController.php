@@ -311,7 +311,7 @@ class HolesController extends Controller
 			if (Yii::app()->user->level > 50) $model->PREMODERATED=1;
 			else $model->PREMODERATED=0;
 			
-			if ($model->gibdd_id){
+			if (Yii::app()->params['gibddOn'] && $model->gibdd_id){
 				$subj=$model->gibdd->subject->id;
 				if($subj) $model->ADR_SUBJECTRF=$subj;
 			}
@@ -423,7 +423,7 @@ class HolesController extends Controller
 		{
 			$model->attributes=$_POST['Holes'];
 
-			if ($model->gibdd_id){
+			if (Yii::app()->params['gibddOn'] && $model->gibdd_id){
 				$subj=$model->gibdd->subject->id;
 				if($subj) $model->ADR_SUBJECTRF=$subj;
 			}
