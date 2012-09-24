@@ -7,7 +7,7 @@
  * @property integer $id
  * @property integer $hole_id
  * @property integer $user_id
- * @property integer $gibdd_id
+ * @property integer $gibdd_id Deprecated in Rosdostup.ru code while GIBDD is not needed
  * @property integer $date_sent
  * @property string $type
  */
@@ -38,12 +38,17 @@ class HoleRequests extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+<<<<<<< HEAD
 			array((Yii::app()->params['gibddOn'] ? 'hole_id, user_id, gibdd_id, date_sent, type' : 'hole_id, user_id, date_sent, type'), 'required'),
 			array((Yii::app()->params['gibddOn'] ? 'hole_id, user_id, gibdd_id, date_sent, notification_sended' : 'hole_id, user_id, date_sent, notification_sended'), 'numerical', 'integerOnly'=>true),
+=======
+			array('hole_id, user_id, /*gibdd_id*/, date_sent, type', 'required'),
+			array('hole_id, user_id, /*gibdd_id*/, date_sent', 'numerical', 'integerOnly'=>true),
+>>>>>>> daa3c71e9cdecb9e468f5167a6f7cc415d9331f9
 			array('type', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, hole_id, user_id, gibdd_id, date_sent, type', 'safe', 'on'=>'search'),
+			array('id, hole_id, user_id, /*gibdd_id*/, date_sent, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +66,7 @@ class HoleRequests extends CActiveRecord
 			'user'=>array(self::BELONGS_TO, 'UserGroupsUser', 'user_id'),
 		);
 	}
-	
+
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -72,6 +77,10 @@ class HoleRequests extends CActiveRecord
 			'id' => 'ID',
 			'hole_id' => 'Hole',
 			'user_id' => 'User',
+<<<<<<< HEAD
+=======
+//			'gibdd_id' => 'Gibdd',
+>>>>>>> daa3c71e9cdecb9e468f5167a6f7cc415d9331f9
 			'date_sent' => 'Date Sent',
 			'type' => 'Type',
 		);
@@ -79,26 +88,26 @@ class HoleRequests extends CActiveRecord
             $labels['gibdd_id'] = 'Gibdd';
         return $labels;
 	}
-	
+
 	public function beforeDelete(){
 		foreach ($this->answers as $answer) $answer->delete();
 		return true;
 	}
-	
+
 	public function afterDelete(){
 		if (!count ($this->findAll('hole_id='.$this->hole_id.' AND type="'.$this->type.'"'))){
 			if ($this->type=='gibdd') {
-				$this->hole->STATE='inprogress';				
+				$this->hole->STATE='inprogress';
 				$this->hole->update();
 			}
 			if ($this->type=='prosecutor') {
 				$this->hole->STATE='achtung';
 				$this->hole->DATE_SENT_PROSECUTOR=null;
 				$this->hole->update();
-			}			
-		}	
-		return true;	
-	}		
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -114,8 +123,12 @@ class HoleRequests extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('hole_id',$this->hole_id);
 		$criteria->compare('user_id',$this->user_id);
+<<<<<<< HEAD
         if(Yii::app()->params['gibddOn'])
             $criteria->compare('gibdd_id',$this->gibdd_id);
+=======
+//		$criteria->compare('gibdd_id',$this->gibdd_id);
+>>>>>>> daa3c71e9cdecb9e468f5167a6f7cc415d9331f9
 		$criteria->compare('date_sent',$this->date_sent);
 		$criteria->compare('type',$this->type,true);
 

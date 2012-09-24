@@ -13,6 +13,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 <div class="head">
 		<div class="container">
 		<div class="lCol">
+<<<<<<< HEAD
 					<a href="/" class="logo" title="На главную"><img src="<? echo Yii::app()->params['logo_path'] ?>" alt="Логотип" /></a>
 					<div class="btn">
 						<?php 
@@ -22,6 +23,9 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 						
 						<?php echo CHtml::link('<i class="text">Добавить</i><i class="arrow"></i>',$newlnk,Array('class'=>'addFact')); ?>
 					</div>
+=======
+					<a href="/" class="logo" title="На главную"><img src="/images/logo.png"  alt="РосДоступ" /></a>
+>>>>>>> daa3c71e9cdecb9e468f5167a6f7cc415d9331f9
 			</div>
 			<div class="rCol">
 	<div class="h">
@@ -384,7 +388,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<?php else : ?>	
 				<div class="progress">
 
-								<p>		мешает эта яма? <?php  echo CHtml::link('авторизуйся и отправь заявление в гибдд', array('review','id'=>$hole->ID),array('class'=>"declarationBtn")); ?>.
+								<p>		мешает этот барьер? <?php  echo CHtml::link('авторизуйся и отправь заявление', array('review','id'=>$hole->ID),array('class'=>"declarationBtn")); ?>.
 								</p>
 
 
@@ -418,6 +422,18 @@ new Ya.share({
 		},
 		serviceSpecific: {
 			twitter: {
+<<<<<<< HEAD
+				title: 'Обнаружен барьер по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+			},
+			facebook: {
+				title: 'Обнаружен барьер по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+			},
+			moimir: {
+				title: 'Обнаружен барьер по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+			},
+			odnoklassniki: {
+				title: 'Обнаружен барьер по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+=======
 				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			facebook: {
@@ -428,6 +444,7 @@ new Ya.share({
 			},
 			odnoklassniki: {
 				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+>>>>>>> origin/master
 			}
 		}
 });
@@ -468,10 +485,17 @@ new Ya.share({
 		</div>
 		<div class="bbcode">
 			<p><b>Ссылка на эту страницу:</b></p>
+<<<<<<< HEAD
 			<input onfocus="selectAll(this)" type="text" value='<a href="<?=Yii::app()->request->hostInfo?>/<?=Yii::app()->request->pathInfo?>"><?=Yii::app()->name?> :: <?= CHtml::encode($hole->ADDRESS) ?></a>'/>
 			<p><b>BBcode для форума:</b></p>
 			<textarea onfocus="selectAll(this)" rows="3">[url=<?=Yii::app()->request->hostInfo?>/<?=Yii::app()->request->pathInfo?>]<?php if ($hole->pictures_fresh) : ?>[img]<?=Yii::app()->request->hostInfo.'/'.$hole->pictures_fresh[0]->medium?>[/img]<?php endif; ?>[/url][url=<?=Yii::app()->request->hostInfo?>/<?=Yii::app()->request->pathInfo?>] 
 			<?=Yii::app()->name?> :: <?=CHtml::encode($hole['ADDRESS'])?>[/url]</textarea>
+=======
+			<input onfocus="selectAll(this)" type="text" value='<a href="<?=Yii::app()->request->hostInfo?>/<?=Yii::app()->request->pathInfo?>">РосДоступ :: <?= CHtml::encode($hole->ADDRESS) ?></a>'/>
+			<p><b>BBcode для форума:</b></p>
+			<textarea onfocus="selectAll(this)" rows="3">[url=<?=Yii::app()->request->hostInfo?>/<?=Yii::app()->request->pathInfo?>]<?php if ($hole->pictures_fresh) : ?>[img]<?=Yii::app()->request->hostInfo.'/'.$hole->pictures_fresh[0]->medium?>[/img]<?php endif; ?>[/url][url=<?=Yii::app()->request->hostInfo?>/<?=Yii::app()->request->pathInfo?>] 
+			РосДоступ :: <?=CHtml::encode($hole['ADDRESS'])?>[/url]</textarea>
+>>>>>>> daa3c71e9cdecb9e468f5167a6f7cc415d9331f9
 			
 			
 		</div>

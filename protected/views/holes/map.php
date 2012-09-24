@@ -1,14 +1,18 @@
 <?
 $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 ?>
-<div id="addmess" style="display:none; color:#0C0"><p><b>Выберите место на карте и кликните по нему два раза, чтобы отметить расположение ямы.</b></p></div>
+<div id="addmess" style="display:none; color:#0C0"><p><b>Выберите место на карте и кликните по нему два раза, чтобы отметить расположение дефекта.</b></p></div>
   <div class="head">
 		<div class="container">
 <div class="lCol">
+<<<<<<< HEAD
 												<a href="/" class="logo" title="На главную"><img src="<? echo Yii::app()->params['logo_path'] ?>" alt="Логотип" /></a>
 												<div class="btn">									
 													<?php echo CHtml::link('<i class="text">Добавить</i><i class="arrow"></i>',Array('/holes/add'),Array('class'=>'addFact', 'id'=>'addFactButton')); ?>
 												</div>
+=======
+												<a href="/" class="logo" title="На главную"><img src="/images/logo.png"  alt="РосДоступ" /></a>
+>>>>>>> daa3c71e9cdecb9e468f5167a6f7cc415d9331f9
 											</div>
 						<div class="rCol">
 <h1>Карта дефектов<?php if ($usermodel) echo ' в зоне наблюдения <br /> пользователя '.CHtml::link(CHtml::encode($usermodel->fullname), Array('profile/view', 'id'=>$usermodel->id)); ?></h1>
@@ -36,7 +40,7 @@ $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 <br />
 <div class="chekboxes" style="float:right;">
 <?php echo $form->checkBox($model,"archive",Array('class'=>'filter_checkbox')); ?>	
-<?php echo $form->labelEx($model,'archive',Array('label'=>'Показывать ямы из архива', 'class'=>'archive')); ?>
+<?php echo $form->labelEx($model,'archive',Array('label'=>'Показывать дефекты из архива', 'class'=>'archive')); ?>
 
 </div>
 
@@ -46,7 +50,7 @@ $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 <?php if (!Yii::app()->user->isGuest && Yii::app()->user->userModel->hole_area) : ?>
 <label><span class="myarea_check"><input id="myarea_check_inp" name="myarea_check_inp" type="checkbox" <?php if (!$usermodel) echo 'checked="true"' ?> /></span><ins>Показать мою зону наблюдения</ins></label>
 <?php endif; ?>
-<label style="padding-left:10px;"><span class="gibdd_check"><input id="ibdd_check_inp" name="ibdd_check_inp" type="checkbox" /></span><ins>Показывать границы наблюдения подразделений ГИБДД</ins></label>
+<label style="padding-left:10px;"><span class="gibdd_check"><input id="ibdd_check_inp" name="ibdd_check_inp" type="checkbox" /></span><ins>Показывать границы наблюдения подразделений гос. учреждений</ins></label>
 </div>
 </div>
 <?php $this->endWidget(); ?>			</div>
@@ -54,7 +58,7 @@ $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 	</div>
 	<div class="mainCols">
 			
-<div id="addmess" style="display:none; color:#0C0"><p><b>Выберите место на карте и кликните по нему два раза, чтобы отметить расположение ямы.</b></p></div>
+<div id="addmess" style="display:none; color:#0C0"><p><b>Выберите место на карте и кликните по нему два раза, чтобы отметить расположение дефекта.</b></p></div>
 
 <div class="bx-yandex-search-layout">
 	<div class="bx-yandex-search-form">

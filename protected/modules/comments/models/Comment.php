@@ -417,7 +417,11 @@ class Comment extends CActiveRecord {
     
     public function afterSave() {
 		if ($this->parent && $this->parent->user->email && $this->parent->user->id != $this->user->id){
+<<<<<<< HEAD
 			$headers = "MIME-Version: 1.0\r\nFrom: \"".Yii::app()->name."\" <".Yii::app()->params['adminEmail'].">\r\nReply-To: ".Yii::app()->params['adminEmail']."\r\nContent-Type: text/html; charset=utf-8";
+=======
+			$headers = "MIME-Version: 1.0\r\nFrom: \"Rosdostup\" <".Yii::app()->params['adminEmail'].">\r\nReply-To: ".Yii::app()->params['adminEmail']."\r\nContent-Type: text/html; charset=utf-8";
+>>>>>>> daa3c71e9cdecb9e468f5167a6f7cc415d9331f9
 			Yii::app()->request->baseUrl='http://'.$_SERVER['HTTP_HOST'];
 			$mailbody=Yii::app()->controller->renderPartial('//ugmail/reply2Comment', Array(
 						'hole'=>$this->ownerModel,
