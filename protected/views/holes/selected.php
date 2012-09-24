@@ -51,7 +51,7 @@ $this->pageTitle=Yii::app()->name . ' :: Мои ямы';
 <div class="head">
 		<div class="container">
 		<div class="lCol">
-					<a href="/" class="logo" title="На главную"><img src="/images/logo.png"  alt="Логотип" /></a>
+					<a href="/" class="logo" title="На главную"><img src="<? echo Yii::app()->params['logo_path'] ?>" alt="Логотип" /></a>
 			</div>
 			<div class="rCol">
 	<div class="h">
