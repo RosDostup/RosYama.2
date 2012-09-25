@@ -377,8 +377,8 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				<div id="gibdd_form"></div>
 				<?php if(Yii::app()->params['gibddOn'])
                     $this->renderPartial('_form_gibdd', Array('hole'=>$hole, 'gibdd'=>$hole->gibdd));
-                else
-                    $this->renderPartial('_form_gibdd', Array('hole'=>$hole));
+//                else // Если ГИБДД не используется, его форма не нужна
+//                    $this->renderPartial('_form_gibdd', Array('hole'=>$hole));
 				?>
 				</div>
 			<?php else : ?>	
