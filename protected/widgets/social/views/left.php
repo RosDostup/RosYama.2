@@ -12,7 +12,7 @@
 		new TWTR.Widget({
 		version: 2,
 		type: 'search',
-		search: 'rosyama',
+		search: '<?php echo Yii::app()->params['twtr_srchword'] ?>',
 		interval: 6000,
 		title: '',
 		subject: '',
