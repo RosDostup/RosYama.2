@@ -737,7 +737,7 @@ function setCoordValue(map, ev)
 	else {
 		if (ev!='from_coord') var ev=false; 
 		map.setCenter(new YMaps.GeoPoint($('#Holes_LONGITUDE').val(), $('#Holes_LATITUDE').val()));
-		}
+    }
 	var lon = $('#Holes_LATITUDE').val();
 	var lat = $('#Holes_LONGITUDE').val();
 	coordpoint = new YMaps.Placemark(new YMaps.GeoPoint(lat, lon), { style: 'default#violetPoint', draggable: true, hasBalloon: false, hideIcon: false });
@@ -747,7 +747,7 @@ function setCoordValue(map, ev)
 		geocodeOnSetCoordValue(true);
 	});
 	map.addOverlay(coordpoint);	
-	geocodeOnSetCoordValue(ev);
+	geocodeOnSetCoordValue(GIBDD_ON ? ev : false);
 }
 
 function geocodeOnSetCoordValue(ev)
