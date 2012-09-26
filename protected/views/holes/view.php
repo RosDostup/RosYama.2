@@ -172,10 +172,12 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_8a'), array('fix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 								<? endif; ?>
 							</div>
+                            <?php if(Yii::app()->params->gibddOn) {?>
 							<div class="rc">
 								Также можно отправить:<br />
 								<span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
 							</div>
+                            <?php }?>
 						</div>
 						<?
 						break;
@@ -201,10 +203,12 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 								<p><a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="declarationBtn"><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_4') ?></a></p>
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_6'), array('sent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 							</div>
+                            <?php if(Yii::app()->params->gibddOn) {?>
 							<div class="rc">
 								Также можно отправить:<br />
 								<span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
-							</div>						
+							</div>
+                            <?php }?>
 						<? endif; ?>	
 						<?
 						break;
@@ -222,7 +226,13 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 							<div class="rc" style="width:145px;padding: 24px 0 24px 15px;">
 								<p>Если вас не устраивает ответ ГИБДД, то можно</p>
 								<p><a href="#" onclick="var c=document.getElementById('prosecutor_form2');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;">подать Заявление в Прокуратуру</a></p>
-								<div class="pdf_form" id="prosecutor_form2"<?= isset($_GET['show_prosecutor_form2']) ? ' style="display: block;"' : '' ?>>								
+								<div class="pdf_form" id="prosecutor_form2"
+                                     <?php if(Yii::app()->params->gibddOn)
+                                        echo isset($_GET['show_prosecutor_form2']) ? ' style="display: block;"' : '';
+                                     else
+                                         echo ' style="display: block;"';
+                                    ?>
+                                >
 								<?php $this->renderPartial('_form_prosecutor',Array('hole'=>$hole)); ?>	
 								</div>
 							</div>
@@ -244,9 +254,11 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 								<p><?php echo CHtml::link('Ещё ответ из ГИБДД', array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 								<?php endif; ?>
 							</div>
+                            <?php if(Yii::app()->params->gibddOn) {?>
 							<div class="rc">
 								Также можно отправить <span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
-							</div>						
+							</div>
+                            <?php }?>
 						<? endif; ?>	
 						<?
 						break;
@@ -280,9 +292,11 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_12'), array('notsent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 								<?php endif; ?>
 							</div>
+                            <?php if(Yii::app()->params->gibddOn) {?>
 							<div class="rc">
 								Также можно отправить <span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
-							</div>	
+							</div>
+                            <?php }?>
 						<? endif; ?>	
 						<?
 						break;
@@ -290,7 +304,6 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					case 'prosecutor':
 					{
 						?>
-						<? if(!$hole->request_gibdd): ?><?php endif; ?>
 						<? if($hole->request_prosecutor): ?>
 						<div class="lc" style="width:150px">
 							<?php if(Yii::app()->params['gibddOn'] && $hole->request_gibdd && !$hole->request_gibdd->answers): ?>
