@@ -79,7 +79,7 @@ $params=array(
 		//Search word for Twitter search plugin
 		'twtr_srchword'=>'rosdostup',
 		// Path to Logo image
-		'logo_path'=>'/images/prj_specific/rosdostup/logout.png',
+		'logo_path'=>'/images/prj_specific/rosdostup/logo.png',
 		// this is used in contact page
 		'adminEmail'=>'admin@rosdostup.ru',
 		//Yandex map's key
