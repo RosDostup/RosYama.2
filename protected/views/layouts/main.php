@@ -129,9 +129,9 @@
 	<script type="text/javascript">
                 var reformalOptions = {
 			//project_id: 71829,
-                        project_id: Yii::app()->params['reformal_prj_id'],
+                        project_id: <?php echo Yii::app()->params['reformal_prj_id'] ?>,
                         //project_host: "rosdostup.reformal.ru",
-                        project_host: Yii::app()->params['reformal_prj_host']
+			project_host: "<?php echo Yii::app()->params['reformal_prj_host'];?>",
                         force_new_window: false,
                         tab_alignment: "left",
                         tab_top: "316",
