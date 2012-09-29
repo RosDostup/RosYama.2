@@ -75,7 +75,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<? if($hole->WAIT_DAYS): ?>
 			<div class="lc">
 				<div class="wait">
-					<p>Ждать, когда устраня</p>
+					<p>Ждать, когда устранят</p>
 					<p class="days"><?php echo Y::declOfNum($hole->WAIT_DAYS, array('день', 'дня', 'дней')); ?></p> 
 				</div>
 			</div>
@@ -384,7 +384,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<?php else : ?>	
 				<div class="progress">
 
-								<p>		мешает эта яма? <?php  echo CHtml::link('авторизуйся и отправь заявление в гибдд', array('review','id'=>$hole->ID),array('class'=>"declarationBtn")); ?>.
+								<p>		мешает эта яма? <?php  echo CHtml::link('авторизуйся и отправь заявление', array('review','id'=>$hole->ID),array('class'=>"declarationBtn")); ?>.
 								</p>
 
 
@@ -418,16 +418,16 @@ new Ya.share({
 		},
 		serviceSpecific: {
 			twitter: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			facebook: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			moimir: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			odnoklassniki: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			}
 		}
 });
@@ -488,7 +488,7 @@ new Ya.share({
 					</div>
 					<div style="text-align:right;">
 					<?php if (Yii::app()->user->level > 80 || $hole->IsUserHole) : ?>
-						<?php echo CHtml::link(CHtml::image('/images/published.png', 'Утвердить изображение и отметить яму как устраненную', Array('title'=>'Утвердить изображение и отметить яму как устраненную')), Array('approveFixedPicture','id'=>$hole->ID,'pictid'=>$picture->id), Array('class'=>'declarationBtn')); ?>
+						<?php echo CHtml::link(CHtml::image('/images/published.png', 'Утвердить изображение и отметить дефект как устраненную', Array('title'=>'Утвердить изображение и отметить дефект как устраненную')), Array('approveFixedPicture','id'=>$hole->ID,'pictid'=>$picture->id), Array('class'=>'declarationBtn')); ?>
 					<?php endif; ?>
 					
 					<?php if ($picture->user_id==Yii::app()->user->id || Yii::app()->user->level > 80 || $hole->IsUserHole) : ?>
