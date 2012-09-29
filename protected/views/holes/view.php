@@ -27,7 +27,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 	<div class="h">
 		<div class="info">
 			<p><span class="date"><?php echo CHtml::encode(Y::dateFromTime($hole->DATE_CREATED)); ?></span><?php echo CHtml::link(CHtml::encode($hole->user->getParam('showFullname') ? $hole->user->Fullname : $hole->user->username), array('/profile/view', 'id'=>$hole->user->id),array('class'=>""));?>
-			<span class="abuse_lnk" style="float:right;"><?php echo CHtml::link('Пожаловаться на эту яму', '#', array(
+			<span class="abuse_lnk" style="float:right;"><?php echo CHtml::link('Пожаловаться на этот дефект', '#', array(
    'onclick'=>'$("#abuseDialog").dialog("open"); return false;',
 )); ?></span>
 			</p>
@@ -42,11 +42,11 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					<? elseif($hole->DATE_SENT): ?> 
 						<?php if ($hole->requests_with_answers && $hole->STATE == 'gibddre') echo CHtml::encode(Y::dateFromTime($hole->requests_with_answers[0]->answers[0]->date)); ?>
 						<?php if (Yii::app()->params['gibddOn'] && count($hole->requests) == 1) : ?>
-							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> отправлен запрос в ГИБДД
+							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> отправлен запрос
 						<? elseif(Yii::app()->params['gibddOn']) : ?>
-							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> был отправлен первый запрос в ГИБДД 
+							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> был отправлен первый запрос 
 						<? endif; ?>	
-						<?php if ($hole->requests_with_answers && $hole->STATE == 'fixed') echo '<br />'.CHtml::encode(Y::dateFromTime($hole->requests_with_answers[0]->answers[0]->date)).' получен ответ ГИБДД'; ?>
+						<?php if ($hole->requests_with_answers && $hole->STATE == 'fixed') echo '<br />'.CHtml::encode(Y::dateFromTime($hole->requests_with_answers[0]->answers[0]->date)).' получен ответ'; ?>
 					<? endif; ?>
 					<?php if (count($hole->requests) > 1) : ?>
 						<br/><a href="#" onclick="$('#requests_gibdd_history').toggle('slow'); return false;">история запросов</a>
@@ -75,7 +75,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<? if($hole->WAIT_DAYS): ?>
 			<div class="lc">
 				<div class="wait">
-					<p>Ждать, когда отремонтируют</p>
+					<p>Ждать, когда устранят</p>
 					<p class="days"><?php echo Y::declOfNum($hole->WAIT_DAYS, array('день', 'дня', 'дней')); ?></p> 
 				</div>
 			</div>
@@ -90,7 +90,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<?php if(!Yii::app()->user->isGuest) : ?>
 				<?php if ($hole->STATE !='fixed' && empty($hole->request_gibdd)) : ?>
 				<div class="form">
-					Яму заделали? Есть фотографии? <a href="#" onclick="$('#upload_fixeds').toggle('slow'); return false;">Загрузи!</a>
+					Дефект устранили? Есть фотографии? <a href="#" onclick="$('#upload_fixeds').toggle('slow'); return false;">Загрузи!</a>
 					<?php $form=$this->beginWidget('CActiveForm', array(
 						'id'=>'holes-form',
 						'enableAjaxValidation'=>false,
@@ -196,7 +196,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'), array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 							</div>
 						<? else : ?>	
-						<!--<p>Заявление в ГИБДД уже было отправлено если Вы тоже отправили заявление по этому дефекту, отметте ниже</p>-->
+						<!--<p>Заявление уже было отправлено если Вы тоже отправили заявление по этому дефекту, отметте ниже</p>-->
 							<div class="cc">
 								<p><a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="declarationBtn"><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_4') ?></a></p>
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_6'), array('sent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
@@ -384,7 +384,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<?php else : ?>	
 				<div class="progress">
 
-								<p>		мешает эта яма? <?php  echo CHtml::link('авторизуйся и отправь заявление в гибдд', array('review','id'=>$hole->ID),array('class'=>"declarationBtn")); ?>.
+								<p>		мешает эта яма? <?php  echo CHtml::link('авторизуйся и отправь заявление', array('review','id'=>$hole->ID),array('class'=>"declarationBtn")); ?>.
 								</p>
 
 
@@ -418,16 +418,16 @@ new Ya.share({
 		},
 		serviceSpecific: {
 			twitter: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			facebook: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			moimir: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			odnoklassniki: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			}
 		}
 });
@@ -488,7 +488,7 @@ new Ya.share({
 					</div>
 					<div style="text-align:right;">
 					<?php if (Yii::app()->user->level > 80 || $hole->IsUserHole) : ?>
-						<?php echo CHtml::link(CHtml::image('/images/published.png', 'Утвердить изображение и отметить яму как устраненную', Array('title'=>'Утвердить изображение и отметить яму как устраненную')), Array('approveFixedPicture','id'=>$hole->ID,'pictid'=>$picture->id), Array('class'=>'declarationBtn')); ?>
+						<?php echo CHtml::link(CHtml::image('/images/published.png', 'Утвердить изображение и отметить дефект как устраненную', Array('title'=>'Утвердить изображение и отметить дефект как устраненную')), Array('approveFixedPicture','id'=>$hole->ID,'pictid'=>$picture->id), Array('class'=>'declarationBtn')); ?>
 					<?php endif; ?>
 					
 					<?php if ($picture->user_id==Yii::app()->user->id || Yii::app()->user->level > 80 || $hole->IsUserHole) : ?>
