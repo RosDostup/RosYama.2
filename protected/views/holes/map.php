@@ -36,7 +36,7 @@ $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 <br />
 <div class="chekboxes" style="float:right;">
 <?php echo $form->checkBox($model,"archive",Array('class'=>'filter_checkbox')); ?>	
-<?php echo $form->labelEx($model,'archive',Array('label'=>'<?=Yii::t('map_view', 'MAP_SHOW_ARCHIVED')?>', 'class'=>'archive')); ?>
+<?php echo $form->labelEx($model,'archive',Array('label'=>Yii::t('map_view', 'MAP_SHOW_ARCHIVED'), 'class'=>'archive')); ?>
 
 </div>
 
