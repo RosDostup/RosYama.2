@@ -76,17 +76,22 @@ $params=array(
 		//Information to connect reformal account
 		'reformal_prj_id' => '71829',
 		'reformal_prj_host' => 'rosdostup.reformal.ru',
+
 		//Search word for Twitter search plugin
 		'twtr_srchword'=>'rosdostup',
+
 		// Path to Logo image
 		'logo_path'=>'/images/prj_specific/rosdostup/logo.png',
+
+		// For copyright meta in header
+		'copyright' => 'РосДоступ',
+
 		// this is used in contact page
 		'adminEmail'=>'admin@rosdostup.ru',
+
 		//Yandex map's key
 		'YMapKey'=>'AKtzDVABAAAAbnnpfAIAZPFgkjAuQV52QNsahNkE7plr4F0AAAAAAAAAAAAyrGSHDyaYbEfL1i8AVZDhjT4VHQ==',
-        'gibddOn' => false, // True, если ГИБДД участвует в форме дефекта; false, если она исключается из формы
-		//'layout'=>'startpage',
-
+        	'gibddOn' => false, // True, если ГИБДД участвует в форме дефекта; false, если она исключается из формы
 	);		
 
 ?>

@@ -124,7 +124,8 @@ class YMapMultiplot extends CWidget
         else $stl="";*/
         if ($this->width && $this->height) echo '<div id="'.$this->id.'" style="width:'.$this->width.'; height:'.$this->height.';'.$stl.'" class="bx-yandex-map">загрузка карты...</div>';
         else echo '<div id="'.$this->id.'"></div>';
-        echo '<script src="http://api-maps.yandex.ru/1.1/index.xml?key='.$this->key.'" type="text/javascript"></script>
+        echo '<script type="text/javascript">var GIBDD_ON = '.(Yii::app()->params->gibddOn ? 'true' : 'false').';</script>
+        <script src="http://api-maps.yandex.ru/1.1/index.xml?key='.$this->key.'" type="text/javascript"></script>
 <script src="'.CHtml::asset(dirname(__FILE__).DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'ymapmultiplot.js').'" type="text/javascript"></script>';
 /* echo '<script language="javascript">
 '.$this->$jsfunc.'
