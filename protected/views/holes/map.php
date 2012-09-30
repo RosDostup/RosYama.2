@@ -46,7 +46,9 @@ $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 <?php if (!Yii::app()->user->isGuest && Yii::app()->user->userModel->hole_area) : ?>
 <label><span class="myarea_check"><input id="myarea_check_inp" name="myarea_check_inp" type="checkbox" <?php if (!$usermodel) echo 'checked="true"' ?> /></span><ins>Показать мою зону наблюдения</ins></label>
 <?php endif; ?>
+<?php if(Yii::app()->params->gibddOn) {?>
 <label style="padding-left:10px;"><span class="gibdd_check"><input id="ibdd_check_inp" name="ibdd_check_inp" type="checkbox" /></span><ins>Показывать границы наблюдения подразделений ГИБДД</ins></label>
+<?php }?>
 </div>
 </div>
 <?php $this->endWidget(); ?>			</div>

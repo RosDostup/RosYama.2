@@ -642,7 +642,6 @@ class Holes extends CActiveRecord
 			'LATITUDE' => 'Широта',
 			'LONGITUDE' => 'Долгота',
 			'ADDRESS' => 'Адрес дефекта',
-			'gibdd_id'=>'Отдел ГИБДД',
 			'STATE' => 'Статус',
 			'DATE_CREATED' => 'Дата создания',
 			'DATE_SENT' => 'Дата отправки в ГИБДД',
@@ -652,8 +651,6 @@ class Holes extends CActiveRecord
 			'TYPE_ID' => 'Тип дефекта',
 			'ADR_SUBJECTRF' => 'Субъект РФ',
 			'ADR_CITY' => 'Город',
-			'COMMENT_GIBDD_REPLY' => 'Comment Gibdd Reply',
-			'GIBDD_REPLY_RECEIVED' => 'Gibdd Reply Received',
 			'PREMODERATED' => 'Модер.',
 			'NOT_PREMODERATED' => 'только непроверенные',
 			'DATE_SENT_PROSECUTOR' => 'Date Sent Prosecutor',
@@ -665,6 +662,12 @@ class Holes extends CActiveRecord
 			'archive'=>'Архив',
 			'deleted'=>'Удалено'
 		);
+        if(Yii::app()->params->gibddOn) {
+            $labels['GIBDD_REPLY_RECEIVED'] = 'Gibdd Reply Received';
+            $labels['COMMENT_GIBDD_REPLY'] = 'Comment Gibdd Reply';
+            $labels['gibdd_id'] = 'Отдел ГИБДД';
+        }
+		return $labels;
 	}
 
 	/**
