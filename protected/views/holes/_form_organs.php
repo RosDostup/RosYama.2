@@ -1,5 +1,5 @@
 					Не исключена вероятность того, что на <a href="http://www.gosuslugi.ru/ru/chorg/index.php?ssid_4=4120&stab_4=4&rid=228&tid=2" target="_blank">сайте госуслуг</a> окажется немного полезной информации.
-					
+
 					<?php $form=$this->beginWidget('CActiveForm', array(
 						'id'=>'request-form',
 						'enableAjaxValidation'=>false,

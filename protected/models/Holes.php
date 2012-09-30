@@ -160,9 +160,9 @@ class Holes extends CActiveRecord
 	{
 	$arr=Array();
 	$arr['fresh']      = 'Добавлено на сайт';
-	$arr['inprogress'] = 'В ГАИ';
+	$arr['inprogress'] = (Yii::app()->params->gibddOn ? 'В ГАИ' : 'В местных органах власти');
 	$arr['fixed']      = 'Отремонтировано';
-	$arr['achtung']    = 'В ГАИ';
+	$arr['achtung']    = (Yii::app()->params->gibddOn ? 'В ГАИ' : 'В местных органах власти');
 	$arr['gibddre']    = 'Получен ответ';
 	$arr['prosecutor'] = 'Заявление в прокуратуре';
 	return $arr;
@@ -447,7 +447,7 @@ class Holes extends CActiveRecord
 	
 	public function makeRequest($type){
 		$attr='request_'.$type;
-		if (!$this->$attr){
+		if (empty($this->$attr)){
 			$request=new HoleRequests;
 			$request->attributes=Array(
 							'hole_id'=>$this->ID,

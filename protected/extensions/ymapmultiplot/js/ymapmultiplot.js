@@ -747,7 +747,7 @@ function setCoordValue(map, ev)
 		geocodeOnSetCoordValue(true);
 	});
 	map.addOverlay(coordpoint);	
-	geocodeOnSetCoordValue(ev);
+	geocodeOnSetCoordValue(GIBDD_ON ? ev : false);
 }
 
 function geocodeOnSetCoordValue(ev)
