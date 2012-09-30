@@ -160,9 +160,9 @@ class Holes extends CActiveRecord
 	{
 	$arr=Array();
 	$arr['fresh']      = 'Добавлено на сайт';
-	$arr['inprogress'] = 'В ГАИ';
+	$arr['inprogress'] = (Yii::app()->params->gibddOn ? 'В ГАИ' : 'В местных органах власти');
 	$arr['fixed']      = 'Отремонтировано';
-	$arr['achtung']    = 'В ГАИ';
+	$arr['achtung']    = (Yii::app()->params->gibddOn ? 'В ГАИ' : 'В местных органах власти');
 	$arr['gibddre']    = 'Получен ответ';
 	$arr['prosecutor'] = 'Заявление в прокуратуре';
 	return $arr;
@@ -447,7 +447,7 @@ class Holes extends CActiveRecord
 	
 	public function makeRequest($type){
 		$attr='request_'.$type;
-		if (!$this->$attr){
+		if (empty($this->$attr)){
 			$request=new HoleRequests;
 			$request->attributes=Array(
 							'hole_id'=>$this->ID,
@@ -636,32 +636,32 @@ class Holes extends CActiveRecord
 	 */
 	public function attributeLabels()
 	{
-		return array(
-			'ID' => 'ID',
-			'USER_ID' => 'Пользователь',
-			'LATITUDE' => 'Широта',
-			'LONGITUDE' => 'Долгота',
-			'ADDRESS' => 'Адрес дефекта',
-			'STATE' => 'Статус',
-			'DATE_CREATED' => 'Дата создания',
-			'DATE_SENT' => 'Дата отправки в ГИБДД',
-			'DATE_STATUS' => 'Дата изменения',
-			'COMMENT1' => 'Комментарии',
-			'COMMENT2' => 'Комментарии',
-			'TYPE_ID' => 'Тип дефекта',
-			'ADR_SUBJECTRF' => 'Субъект РФ',
-			'ADR_CITY' => 'Город',
-			'PREMODERATED' => 'Модер.',
-			'NOT_PREMODERATED' => 'только непроверенные',
-			'DATE_SENT_PROSECUTOR' => 'Date Sent Prosecutor',
-			'deletepict'=>'Удалить фотографию?',
-			'replуfiles'=>'Необходимо добавить отсканированный ответ из ГИБДД',
-			'upploadedPictures'=>$this->scenario=='fix' ? 'Желательно добавить фотографии исправленного дефекта' : 'Нужно загрузить фотографии (не больше 10 штук)',
-			'description_size'=>'Описание дефекта (размеры и прочая информация)',
-			'description_locality'=>'Подробное описание расположения дефекта на местности',
-			'archive'=>'Архив',
-			'deleted'=>'Удалено'
-		);
+        $labels = array(
+            'ID' => 'ID',
+            'USER_ID' => 'Пользователь',
+            'LATITUDE' => 'Широта',
+            'LONGITUDE' => 'Долгота',
+            'ADDRESS' => 'Адрес дефекта',
+            'STATE' => 'Статус',
+            'DATE_CREATED' => 'Дата создания',
+            'DATE_SENT' => 'Дата отправки в ГИБДД',
+            'DATE_STATUS' => 'Дата изменения',
+            'COMMENT1' => 'Комментарии',
+            'COMMENT2' => 'Комментарии',
+            'TYPE_ID' => 'Тип дефекта',
+            'ADR_SUBJECTRF' => 'Субъект РФ',
+            'ADR_CITY' => 'Город',
+            'PREMODERATED' => 'Модер.',
+            'NOT_PREMODERATED' => 'только непроверенные',
+            'DATE_SENT_PROSECUTOR' => 'Date Sent Prosecutor',
+            'deletepict'=>'Удалить фотографию?',
+            'replуfiles'=>'Необходимо добавить отсканированный ответ из ГИБДД',
+            'upploadedPictures'=>$this->scenario=='fix' ? 'Желательно добавить фотографии исправленного дефекта' : 'Нужно загрузить фотографии (не больше 10 штук)',
+            'description_size'=>'Описание дефекта (размеры и прочая информация)',
+            'description_locality'=>'Подробное описание расположения дефекта на местности',
+            'archive'=>'Архив',
+            'deleted'=>'Удалено'
+        );
         if(Yii::app()->params->gibddOn) {
             $labels['GIBDD_REPLY_RECEIVED'] = 'Gibdd Reply Received';
             $labels['COMMENT_GIBDD_REPLY'] = 'Comment Gibdd Reply';

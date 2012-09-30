@@ -117,7 +117,7 @@
 		</div>
 		<div class="center_footer">
 			<?php if($this->beginCache('countHoles', array('duration'=>3600))) { ?>
-			<?php $this->widget('application.widgets.collection.collectionWidget'); ?>			
+			<?php $this->widget('application.widgets.collection.collectionWidget'); ?>
 			<?php $this->endCache(); } ?>
 		</div>
 		<div class="right_footer">
@@ -131,7 +131,7 @@
 			//project_id: 71829,
                         project_id: <?php echo Yii::app()->params['reformal_prj_id'];?>,
                         //project_host: "rosdostup.reformal.ru",
-                        project_host: "<?=Yii::app()->params['reformal_prj_host'];?>",
+                        project_host: "<?php echo Yii::app()->params['reformal_prj_host'];?>",
                         force_new_window: false,
                         tab_alignment: "left",
                         tab_top: "316",
