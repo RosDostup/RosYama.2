@@ -78,6 +78,7 @@ $params=array(
 		// this is used in contact page
 		'adminEmail'=>'admin@rosdostup.ru',
 		'YMapKey'=>'AKtzDVABAAAAbnnpfAIAZPFgkjAuQV52QNsahNkE7plr4F0AAAAAAAAAAAAyrGSHDyaYbEfL1i8AVZDhjT4VHQ==',
+        'copyright' => 'rosdostup', // For copyright meta in header
         'gibddOn' => false, // True, если ГИБДД участвует в форме дефекта; false, если она исключается из формы
 		//'layout'=>'startpage',
 

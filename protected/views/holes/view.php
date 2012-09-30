@@ -41,12 +41,12 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 						<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_STATUS)).' '.Yii::t('holes_view', 'REQUEST_TO_PROSECUTOR_SENT') ?>
 					<? elseif($hole->DATE_SENT): ?> 
 						<?php if ($hole->requests_with_answers && $hole->STATE == 'gibddre') echo CHtml::encode(Y::dateFromTime($hole->requests_with_answers[0]->answers[0]->date)); ?>
-						<?php if (Yii::app()->params['gibddOn'] && count($hole->requests) == 1) : ?>
-							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> отправлен запрос в ГИБДД
-						<? elseif(Yii::app()->params['gibddOn']) : ?>
-							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> был отправлен первый запрос в ГИБДД 
+						<?php if (count($hole->requests) == 1) : ?>
+							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> отправлен запрос в <?=Yii::app()->params['gibddOn'] ? 'ГИБДД' : 'местные органы власти';?>
+						<? else: ?>
+							<br /><?= CHtml::encode(Y::dateFromTime($hole->DATE_SENT))?> был отправлен первый запрос в <?=Yii::app()->params['gibddOn'] ? 'ГИБДД' : 'местные органы власти';?> 
 						<? endif; ?>	
-						<?php if ($hole->requests_with_answers && $hole->STATE == 'fixed') echo '<br />'.CHtml::encode(Y::dateFromTime($hole->requests_with_answers[0]->answers[0]->date)).' получен ответ ГИБДД'; ?>
+						<?php if ($hole->requests_with_answers && $hole->STATE == 'fixed') echo '<br />'.CHtml::encode(Y::dateFromTime($hole->requests_with_answers[0]->answers[0]->date)).' получен ответ '.(Yii::app()->params['gibddOn'] ? 'ГИБДД' : 'местных органов власти');?>
 					<? endif; ?>
 					<?php if (count($hole->requests) > 1) : ?>
 						<br/><a href="#" onclick="$('#requests_gibdd_history').toggle('slow'); return false;">история запросов</a>
@@ -54,7 +54,13 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 							<ul>
 							<?php foreach ($hole->requests as $request) : ?>
 							<?php  if ($request->user) : ?>
-								<li><?php echo date('d.m.Y',$request->date_sent);?> <?php echo $userlink=CHtml::link(CHtml::encode($request->user->getParam('showFullname') ? $request->user->Fullname : ($request->user->name ? $request->user->name : $request->user->username)), array('/profile/view', 'id'=>$request->user->id),array('class'=>""));?>  отправил запрос в <?php echo $request->type=="gibdd" ? "ГИБДД" : "прокуратуру";?>
+								<li><?php echo date('d.m.Y',$request->date_sent);?> <?php echo $userlink=CHtml::link(CHtml::encode($request->user->getParam('showFullname') ? $request->user->Fullname : ($request->user->name ? $request->user->name : $request->user->username)), array('/profile/view', 'id'=>$request->user->id),array('class'=>""));?>  отправил запрос в 
+                                <?php
+                                    if(Yii::app()->params->gibddOn)
+                                        echo $request->type=="gibdd" ? "ГИБДД" : "прокуратуру";
+                                    else
+                                        echo $request->type=="gibdd" ? "местные органы власти" : "прокуратуру";
+                                ?>
 								<?php if ($hole->STATE == 'fixed' && $fix=$hole->getFixByUser($request->user->id)) : ?> 
 								<br /><?php echo date('d.m.Y',$fix->date_fix);?> <?php echo $userlink; ?> отметил факт исправления дефекта
 								<?php endif; ?>
@@ -87,8 +93,8 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				</div>
 			</div>
 			<? endif; ?>
-			<? if(!Yii::app()->user->isGuest): ?>
-				<?php if ($hole->STATE !='fixed' && !$hole->request_gibdd) : ?>
+			<?php if(!Yii::app()->user->isGuest) : ?>
+				<?php if ($hole->STATE !='fixed' && empty($hole->request_gibdd)) : ?>
 				<div class="form">
 					Яму заделали? Есть фотографии? <a href="#" onclick="$('#upload_fixeds').toggle('slow'); return false;">Загрузи!</a>
 					<?php $form=$this->beginWidget('CActiveForm', array(
@@ -164,7 +170,8 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 						<? endif; ?>
 						<div class="progress">
 							<div class="lc">
-								<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="printDeclaration"><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_4') ?></a>
+                                Распечатайте заявление, нажав на кнопку "распечатать заявление", и отошлите документ в местный орган исполнительной власти (мэрия, префектура, управа и т.п.):
+                                <a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="printDeclaration"><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_4') ?></a>
 							</div>
 							<div class="cc">
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_6'), array('sent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
@@ -172,10 +179,23 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_8a'), array('fix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 								<? endif; ?>
 							</div>
-							<div class="rc">
-								Также можно отправить:<br />
-								<span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
-							</div>
+                            <div class="rc">
+                                <?php if(Yii::app()->params->gibddOn) {?>
+
+                                Также можно отправить:<br />
+                                <span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
+                                <?php } else {?>
+
+                                Если вы не знаете куда обращаться, или это вам сложно сделать, направьте заявление в электронную приемную прокуратуры. Для этого нажмите на ссылку:
+
+                                    <p><a href="#" onclick="var c=document.getElementById('prosecutor_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="printDeclaration"><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_14') ?></a></p>
+
+                                    <!--<p><?php //echo CHtml::link('Жалоба в прокуратуру подана', array('prosecutorsent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>-->
+                                <div class="pdf_form" id="prosecutor_form"<?= isset($_GET['show_prosecutor_form']) ? ' style="display: block;"' : '' ?>>
+                                    <?php $this->renderPartial('_form_prosecutor_achtung',Array('hole'=>$hole)); ?>
+                                </div>
+                                <?php }?>
+                            </div>
 						</div>
 						<?
 						break;
@@ -183,7 +203,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					case 'inprogress':
 					{
 						?>
-						<? if($hole->request_gibdd): ?>
+						<? if( !empty($hole->request_gibdd) ): ?>
 						<?php if ($hole->IsUserHole || Yii::app()->user->level > 40) : ?>
 							<div class="cc" style="width:150px">
 								<p><?=  Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_7') ?></p>
@@ -201,10 +221,12 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 								<p><a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="declarationBtn"><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_4') ?></a></p>
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_6'), array('sent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 							</div>
+                            <?php if(Yii::app()->params->gibddOn) {?>
 							<div class="rc">
 								Также можно отправить:<br />
 								<span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
-							</div>						
+							</div>
+                            <?php }?>
 						<? endif; ?>	
 						<?
 						break;
@@ -212,7 +234,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					case 'gibddre':
 					{
 						?>
-						<? if($hole->request_gibdd && $hole->request_gibdd->answers): ?>
+						<? if( !empty($hole->request_gibdd) && $hole->request_gibdd->answers): ?>
 							<div class="lc" style="width:150px">
 								<p><?=  Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_7') ?></p>
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_8'), array('fix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
@@ -220,16 +242,22 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 							<div class="cc"><?php echo CHtml::link('Ещё ответ из ГИБДД', array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?>							
 							</div>
 							<div class="rc" style="width:145px;padding: 24px 0 24px 15px;">
-								<p>Если вас не устраивает ответ ГИБДД, то можно</p>
+								<p>Если вас не устраивает ответ <?=Yii::app()->params['gibddOn'] ? 'ГИБДД' : 'местных органов власти';?>, то можно</p>
 								<p><a href="#" onclick="var c=document.getElementById('prosecutor_form2');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;">подать Заявление в Прокуратуру</a></p>
-								<div class="pdf_form" id="prosecutor_form2"<?= isset($_GET['show_prosecutor_form2']) ? ' style="display: block;"' : '' ?>>								
+								<div class="pdf_form" id="prosecutor_form2"
+                                     <?php if(Yii::app()->params->gibddOn)
+                                        echo isset($_GET['show_prosecutor_form2']) ? ' style="display: block;"' : '';
+                                     else
+                                         echo ' style="display: block;"';
+                                    ?>
+                                >
 								<?php $this->renderPartial('_form_prosecutor',Array('hole'=>$hole)); ?>	
 								</div>
 							</div>
 						<? else : ?>							
 							<div class="lc" style="width:150px">
 							<?php if (!$hole->request_gibdd) : ?>
-								<p>Вы тоже можете отправить свой запрос в ГИБДД по этому дефекту</p>
+								<p>Вы тоже можете отправить свой запрос в <?=Yii::app()->params['gibddOn'] ? 'ГИБДД' : 'местные органы власти';?> по этому дефекту</p>
 							<?php elseif(!$hole->request_gibdd->answers) : ?>
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_12'), array('notsent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 							<?php endif; ?>	
@@ -244,9 +272,11 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 								<p><?php echo CHtml::link('Ещё ответ из ГИБДД', array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 								<?php endif; ?>
 							</div>
+                            <?php if(Yii::app()->params->gibddOn) {?>
 							<div class="rc">
 								Также можно отправить <span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
-							</div>						
+							</div>
+                            <?php }?>
 						<? endif; ?>	
 						<?
 						break;
@@ -274,15 +304,17 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 						<? else : ?>						
 							<div class="cc">
 								<p><a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="declarationBtn"><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_4') ?></a></p>
-								<?php if (!$hole->request_gibdd) : ?>
+								<?php if (empty($hole->request_gibdd)) : ?>
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_6'), array('sent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 								<?php else : ?>
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_12'), array('notsent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 								<?php endif; ?>
 							</div>
+                            <?php if(Yii::app()->params->gibddOn) {?>
 							<div class="rc">
 								Также можно отправить <span><ins>&mdash;</ins>с&nbsp;официального сайта <a href="http://www.gibdd.ru/letter" target="_blank">ГИБДД&nbsp;МВД&nbsp;России</a></span>
-							</div>	
+							</div>
+                            <?php }?>
 						<? endif; ?>	
 						<?
 						break;
@@ -290,7 +322,6 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 					case 'prosecutor':
 					{
 						?>
-						<? if(!$hole->request_gibdd): ?><?php endif; ?>
 						<? if($hole->request_prosecutor): ?>
 						<div class="lc" style="width:150px">
 							<?php if(Yii::app()->params['gibddOn'] && $hole->request_gibdd && !$hole->request_gibdd->answers): ?>
@@ -309,17 +340,17 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 						<? else : ?>
 							<p>Для массовости отправьте свою жалобу в прокуратуру.</p>
 							<div class="cc" style="width:150px">
-								<?php if($hole->request_gibdd && !$hole->request_gibdd->answers): ?>
+								<?php if( !empty($hole->request_gibdd) && !$hole->request_gibdd->answers ): ?>
 									<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'), array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 									<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_12').' в ГИБДД', array('notsent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 									<p><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_7') ?></p>
 									<?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_8'), array('fix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?>
-								<?php elseif($hole->request_gibdd && $hole->request_gibdd->answers): ?>
+								<?php elseif( !empty($hole->request_gibdd) && $hole->request_gibdd->answers ): ?>
 									<p><?php echo CHtml::link('Ещё ответ из ГИБДД', array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>									
 									<p><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_7') ?></p>
 									<?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_8'), array('fix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?>	
 								<?php else: ?>	
-								<p>Или отправьте еще одно заявление в ГИБДД:</p>
+								<p>Или отправьте еще одно заявление в <?=Yii::app()->params['gibddOn'] ? 'ГИБДД' : 'местные органы власти';?>:</p>
 								<p><a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="declarationBtn"><?= Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_4') ?></a></p>
 								<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_TEXT_6'), array('sent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 								<?php endif; ?>	
@@ -378,7 +409,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 				<?php if(Yii::app()->params['gibddOn'])
                     $this->renderPartial('_form_gibdd', Array('hole'=>$hole, 'gibdd'=>$hole->gibdd));
                 else
-                    $this->renderPartial('_form_gibdd', Array('hole'=>$hole));
+                    $this->renderPartial('_form_organs', Array('hole'=>$hole));
 				?>
 				</div>
 			<?php else : ?>	
