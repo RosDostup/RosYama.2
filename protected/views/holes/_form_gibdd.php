@@ -8,7 +8,7 @@
 					)); 
 					$usermodel=Yii::app()->user->userModel;
 					$model=new HoleRequestForm;
-					$model->to = empty($gibdd) ? $gibdd->post_dative.' '.$gibdd->fio_dative : '';
+					$model->to = empty($gibdd) ? '' : $gibdd->post_dative.' '.$gibdd->fio_dative;
 					$model->from=$usermodel->relProfile->request_from ? $usermodel->relProfile->request_from : $usermodel->last_name.' '.$usermodel->name.' '.$usermodel->second_name;
 					$model->address=CHtml::encode($hole->ADDRESS);
 					$model->signature=$usermodel->relProfile->request_signature ? $usermodel->relProfile->request_signature : $usermodel->last_name.' '.substr($usermodel->name, 0, 2).($usermodel->name ? '.' : '').' '.substr($usermodel->second_name, 0, 2).($usermodel->second_name ? '.' : '');
