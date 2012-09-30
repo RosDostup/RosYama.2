@@ -43,12 +43,14 @@
 			<?php echo $form->error($model,'ADDRESS'); ?>
 		</div>
 		
-		<!-- адрес -->
+		<!-- ГИБДД -->
+        <?php if(Yii::app()->params->gibddOn) {?>
 		<div class="f">
 		<?php echo $form->labelEx($model,'gibdd_id'); ?>
 		<?php echo $form->dropDownList($model, 'gibdd_id', CHtml::listData( $model->territorialGibdd, 'id', 'gibdd_name' ));?>
 		<?php echo $form->error($model,'gibdd_id'); ?>
 		</div>
+        <?php }?>
 		
 		<!-- фотки -->
 		<div class="f">
