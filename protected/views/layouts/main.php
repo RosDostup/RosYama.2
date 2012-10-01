@@ -41,7 +41,7 @@
 				array('label'=>'Нормативы', 'url'=>array('/site/page', 'view'=>'regulations')),
 				array('label'=>'Статистика', 'url'=>array('/statics/index')),
 				array('label'=>'FAQ', 'url'=>array('/site/page', 'view'=>'faq')),
-				array('label'=>'Справочники', 'url'=>array('/sprav/index')),
+//				array('label'=>'Справочники', 'url'=>array('/sprav/index')), // Намеренно убрано для Росдоступа
 				//array('label'=>'Logout ('.$this->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!$this->user->isGuest)
 			),
 			'htmlOptions'=>array('class'=>'menu'),
