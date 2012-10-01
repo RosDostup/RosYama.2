@@ -16,7 +16,7 @@
 
 <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?22"></script>
 
-<script type="text/javascript">VK.init({apiId: 2232074, onlyWidgets: true});</script>
+<script type="text/javascript">VK.init({apiId: <?php echo Yii::app()->params['vkWidget_apiId'] ?>, onlyWidgets: true});</script>
 
 </head>
 
