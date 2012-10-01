@@ -77,6 +77,9 @@ $params=array(
 		'reformal_prj_id' => '71829',
 		'reformal_prj_host' => 'rosdostup.reformal.ru',
 
+		//Information to connect VK widget http://vk.com/developers.php?o=-1&p=Like
+		'vkWidget_apiId' => '3152801',
+
 		//Search word for Twitter search plugin
 		'twtr_srchword'=>'rosdostup',
 
