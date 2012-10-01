@@ -242,7 +242,7 @@ EOD
 <table style="background-color: rgb(241, 109, 126)"> 
   <tbody> 
     <tr><td style="padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px"> <b> 
-      <p>Сбор средств на развитие РосЯмы:</p>
+      <p>Сбор средств на развитие проекта «<?=Yii::app()->name;?>»:</p>
         <p>Яндекс-деньги: 41001550415485</p>
         <p><a href="/page/donations/">Подробнее</a></p>
       </b>
@@ -258,9 +258,9 @@ EOD
 <div class="rCol">
 <?php if(Yii::app()->user->isModer) : ?>
 	<?php if($this->action->id!='moderPhotoFix') : ?>
-		<?php echo CHtml::link('Ямы с неотмодерированными фото устраненного дефекта ('.Holes::model()->with('pictures_fixed_not_moderated')->count(Array('condition'=>'t.deleted=0 AND t.PREMODERATED=1 AND t.STATE!="fixed"')).')', Array('/holes/moderPhotoFix/'));?><br /><br />
+		<?php echo CHtml::link('Дефекты с неотмодерированными фото устраненного дефекта ('.Holes::model()->with('pictures_fixed_not_moderated')->count(Array('condition'=>'t.deleted=0 AND t.PREMODERATED=1 AND t.STATE!="fixed"')).')', Array('/holes/moderPhotoFix/'));?><br /><br />
 	<?php else : ?>
-	<h2><?php echo 'Ямы с неотмодерированными фото устраненного дефекта ('.Holes::model()->with('pictures_fixed_not_moderated')->count(Array('condition'=>'t.deleted=0 AND t.PREMODERATED=1 AND t.STATE!="fixed"')).')'; ?></h2>
+	<h2><?php echo 'Дефекты с неотмодерированными фото устраненного дефекта ('.Holes::model()->with('pictures_fixed_not_moderated')->count(Array('condition'=>'t.deleted=0 AND t.PREMODERATED=1 AND t.STATE!="fixed"')).')'; ?></h2>
 	<?php endif; ?>	
 <?php endif; ?>	
 <?php $this->widget('zii.widgets.CListView', array(

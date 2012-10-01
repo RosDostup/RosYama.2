@@ -546,7 +546,7 @@ class Holes extends CActiveRecord
 			$this->WAIT_DAYS = 38 - ceil((time() - $this->DATE_SENT) / 86400);	
 		}
 			
-		//отмечаем яму если просроченна
+		//отмечаем дефект если просрочен
 		if ($this->WAIT_DAYS < 0 && $this->STATE == 'inprogress') {
 			$this->STATE = 'achtung';
 			$this->update();
@@ -572,7 +572,7 @@ class Holes extends CActiveRecord
 				//Потом все отметки об исправленности
 				foreach ($this->fixeds as $fixed) $fixed->delete();
 				
-				//Потом все комментарии к яме
+				//Потом все комментарии к дефекту
 				foreach ($this->comments as $comment) $comment->delete();
 				
 				$this->selected_lists=Array();
@@ -616,7 +616,7 @@ class Holes extends CActiveRecord
 						'comment'=>$comment,
 						'user'=>$this->user,
 						),true);
-			if (mail($this->user->email,"=?utf-8?B?" . base64_encode('Новый комментарий к Вашей яме') . "?=",$mailbody,$headers)){
+			if (mail($this->user->email,"=?utf-8?B?" . base64_encode('Новый комментарий к Вашему дефекту') . "?=",$mailbody,$headers)){
 							return true;
 						}		
 			}	
@@ -771,7 +771,7 @@ class Holes extends CActiveRecord
 	
 		$area=$userModel->hole_area;		
 
-		//Вытаскиваем айдишники ям в полигонах		
+		//Вытаскиваем айдишники дефектов в полигонах		
 		$polygonHolesIds=Array();
 		foreach ($area as $shape){
 			$polygonCriteria=new CDbCriteria;
@@ -797,7 +797,7 @@ class Holes extends CActiveRecord
 	
 		$area=$userModel->hole_area;		
 		
-		//Вытаскиваем айдишники ям не в полигонах		
+		//Вытаскиваем айдишники дефектов не в полигонах		
 		$polygonHolesIds=Array();
 		foreach ($area as $i=>$shape){
 			$polygonCriteria=new CDbCriteria;
@@ -824,7 +824,7 @@ class Holes extends CActiveRecord
 	public function findPkeysNotInArea($polygons, $corners)
 	{
 	
-		//Вытаскиваем айдишники ям не в полигонах		
+		//Вытаскиваем айдишники дефектов не в полигонах		
 		$polygonHolesIds=Array();
 		foreach ($polygons as $i=>$polygon){
 			$polygonCriteria=new CDbCriteria;

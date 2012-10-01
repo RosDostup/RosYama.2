@@ -53,7 +53,7 @@ class pdf1234{
 					}
 			}
 		}
-		// Обработка и вывод картинок на многоям
+		// Обработка и вывод картинок на много дефектов
 		if ($this->models && $printAllPictures)
 			foreach($this->models as $model){
 				$this->pdf->AddPage();
@@ -187,7 +187,7 @@ class pdf1234{
 		return $ar;
 	}
 	
-	// заявление на многоям
+	// заявление на много дефектов
 	protected function text_manyholes($models){
 		$ar['body0'] = '    '.$this->params['date1.day'].'.'.$this->params['date1.month'].'.'.$this->params['date1.year'].' мною было обнаружено несколько повреждений дорожного покрытия, размеры каждого из которых превышают нормативы, установленные ГОСТ Р 505097-93, и которые могут представлять серьёзную опасность для дорожного движения. Ниже список адресов, описаний и ссылок на фотографии обнаруженных мной повреждений. ';
 		$ar['body1'] = '';
@@ -208,7 +208,7 @@ class pdf1234{
 			else return $matches[1];
 		}	
 
-	//универсальный шаблон для типов ям
+	//универсальный шаблон для типов дефектов
 	protected function getTypeTemplate(){
 		$type=$this->temp;
 		$model=$this->models[0];

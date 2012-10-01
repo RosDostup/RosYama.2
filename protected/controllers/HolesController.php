@@ -123,7 +123,7 @@ class HolesController extends Controller
 							$mailbody=$this->renderPartial('/ugmail/achtung_notification', Array('user'=>$user, 'holes'=>$holes),true);
 							//echo $mailbody; die();
 							//$user->email
-							echo 'Напоминание на '.count($holes).'ям, отправлено пользователю '.$user->username.'<br />';
+							echo 'Напоминание на '.count($holes).'дефектов, отправлено пользователю '.$user->username.'<br />';
 							mail($user->email,"=?utf-8?B?" . base64_encode('Истекло время ожидания ответа от ГИБДД') . "?=",$mailbody,$headers);
 						}
 						unset ($holes);
@@ -218,7 +218,7 @@ class HolesController extends Controller
 				Yii::app()->request->baseUrl=Yii::app()->request->hostInfo;
 				$mailbody=$this->renderPartial('/ugmail/abuse2hole', Array('user'=>$userModel, 'hole'=>$model, 'abuse'=>$abuseModel),true);
 				//echo $mailbody; die();
-				mail(Yii::app()->params['adminEmail'],"=?utf-8?B?" . base64_encode('Новая жалоба на яму!') . "?=",$mailbody,$headers);
+				mail(Yii::app()->params['adminEmail'],"=?utf-8?B?" . base64_encode('Новая жалоба на дефект!') . "?=",$mailbody,$headers);
 				Yii::app()->user->setFlash('user', 'Жалоба успешно отправлена');
 				$this->refresh();
 			}
@@ -237,9 +237,9 @@ class HolesController extends Controller
 		if(isset($_POST['Holes']))
 		{			
 			$model->scenario="addFixedFiles";
-			if ($model->savePictures()) Yii::app()->user->setFlash('user', 'Файлы загружены. После одобрания пользователем, загрузившим эту яму или модератором яма получит статус "устранено"');
+			if ($model->savePictures()) Yii::app()->user->setFlash('user', 'Файлы загружены. После одобрения пользователем, загрузившим этот дефект, или модератором, дефект получит статус "устранено"');
 			
-			//Отправляем уведомление хозяину ямы
+			//Отправляем уведомление хозяину дефекта
 			$currentUser=Yii::app()->user->userModel;
 			$pictures=HolePictures::model()->findAll('hole_id='.$model->ID.' AND type="fixed" AND premoderated=0 AND user_id='.$currentUser->id);
 			if ($pictures){
@@ -249,7 +249,7 @@ class HolesController extends Controller
 				$mailbody=$this->renderPartial('/ugmail/fixed_pictures_notification', Array('user'=>$user, 'currentUser'=>$currentUser, 'pictures'=>$pictures, 'hole'=>$model),true);
 				//echo $mailbody; die();
 				//$user->email
-				mail($user->email,"=?utf-8?B?" . base64_encode('Новые фотографии исправленной ямы') . "?=",$mailbody,$headers);
+				mail($user->email,"=?utf-8?B?" . base64_encode('Новые фотографии исправленного дефекта') . "?=",$mailbody,$headers);
 			}
 			
 		}
@@ -271,7 +271,7 @@ class HolesController extends Controller
 					$model->scenario='fix';
 					$model->STATE='fixed';
 					$model->DATE_STATUS=time();
-					if ($model->save()) Yii::app()->user->setFlash('user', 'Статус ямы успешно изменен');
+					if ($model->save()) Yii::app()->user->setFlash('user', 'Статус дефекта успешно изменен');
 				}
 			}
 		}
@@ -380,7 +380,7 @@ class HolesController extends Controller
 	}
 	
 	
-	//Список ГИБДД возле ямы
+	//Список ГИБДД возле дефекта
 	public function actionTerritorialGibdd()
 	{
 		if(isset($_POST['Holes']))
@@ -491,7 +491,7 @@ class HolesController extends Controller
 		}
 		
 		if ($holes && $count) {
-					if($count) Yii::app()->user->setFlash('user', 'Успешная загрузка ответа ГИБДД на ямы: <br/>'.implode('<br/>',$links).'<br/><br/><br/>');
+					if($count) Yii::app()->user->setFlash('user', 'Успешная загрузка ответа ГИБДД на дефект: <br/>'.implode('<br/>',$links).'<br/><br/><br/>');
 					else Yii::app()->user->setFlash('user', 'Произошла ошибка! Ни одного ответа не загружено');
 					$this->redirect(array('personal')); 
 		}	
@@ -561,7 +561,7 @@ class HolesController extends Controller
 				$this->redirect(array('view','id'=>$model->ID));
 	}	
 
-	//удаление ямы админом или модером
+	//удаление дефекта админом или модером
 	public function actionDelete()
 	{
 		if(Yii::app()->request->isPostRequest && (isset($_POST['id']) || (isset($_POST['DELETE_ALL']) && $_POST['DELETE_ALL'])))
@@ -615,7 +615,7 @@ class HolesController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 	
-	//удаление ямы пользователем
+	//удаление дефекта пользователем
 	public function actionPersonalDelete($id)
 	{
 			$model=$this->loadChangeModel($id);				
@@ -834,8 +834,8 @@ class HolesController extends Controller
 				$links[]=CHtml::link($model->ADDRESS,Array('view','id'=>$model->ID));
 				}
 		}		
-		if($count) Yii::app()->user->setFlash('user', 'Успешное изменение статуса ям: <br/>'.implode('<br/>',$links).'<br/><br/><br/>');
-		else Yii::app()->user->setFlash('user', 'Произошла ошибка! Ни одной ямы не изменено');
+		if($count) Yii::app()->user->setFlash('user', 'Успешное изменение статуса дефекта: <br/>'.implode('<br/>',$links).'<br/><br/><br/>');
+		else Yii::app()->user->setFlash('user', 'Произошла ошибка! Ни одного дефекта не изменено');
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : array('personal'));
 	}		
@@ -1109,7 +1109,7 @@ class HolesController extends Controller
 		if (!Yii::app()->user->isModer) $criteria->compare('PREMODERATED',1);
 	
 
-		/// Фильтрация по типу ямы
+		/// Фильтрация по типу дефекта
 		if(isset($_GET['Holes']['type']) && $_GET['Holes']['type'])
 		{
 			$criteria->addInCondition('TYPE_ID', $_GET['Holes']['type']);
