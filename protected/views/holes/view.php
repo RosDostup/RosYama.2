@@ -27,7 +27,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 	<div class="h">
 		<div class="info">
 			<p><span class="date"><?php echo CHtml::encode(Y::dateFromTime($hole->DATE_CREATED)); ?></span><?php echo CHtml::link(CHtml::encode($hole->user->getParam('showFullname') ? $hole->user->Fullname : $hole->user->username), array('/profile/view', 'id'=>$hole->user->id),array('class'=>""));?>
-			<span class="abuse_lnk" style="float:right;"><?php echo CHtml::link('Пожаловаться на эту яму', '#', array(
+			<span class="abuse_lnk" style="float:right;"><?php echo CHtml::link('Пожаловаться на этот дефект', '#', array(
    'onclick'=>'$("#abuseDialog").dialog("open"); return false;',
 )); ?></span>
 			</p>
@@ -96,7 +96,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<?php if(!Yii::app()->user->isGuest) : ?>
 				<?php if ($hole->STATE !='fixed' && empty($hole->request_gibdd)) : ?>
 				<div class="form">
-					Яму заделали? Есть фотографии? <a href="#" onclick="$('#upload_fixeds').toggle('slow'); return false;">Загрузи!</a>
+					Дефект устранили? Есть фотографии? <a href="#" onclick="$('#upload_fixeds').toggle('slow'); return false;">Загрузи!</a>
 					<?php $form=$this->beginWidget('CActiveForm', array(
 						'id'=>'holes-form',
 						'enableAjaxValidation'=>false,
@@ -415,7 +415,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<?php else : ?>	
 				<div class="progress">
 
-								<p>		мешает эта яма? <?php  echo CHtml::link('авторизуйся и отправь заявление в гибдд', array('review','id'=>$hole->ID),array('class'=>"declarationBtn")); ?>.
+								<p>		мешает этот дефект? <?php  echo CHtml::link('авторизуйся и отправь заявление', array('review','id'=>$hole->ID),array('class'=>"declarationBtn")); ?>.
 								</p>
 
 
@@ -449,16 +449,16 @@ new Ya.share({
 		},
 		serviceSpecific: {
 			twitter: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			facebook: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			moimir: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			},
 			odnoklassniki: {
-				title: 'Обнаружен дефект на дороге по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
+				title: 'Обнаружен дефект по адресу: <?= CHtml::encode($hole->ADDRESS) ?>'
 			}
 		}
 });
@@ -519,7 +519,7 @@ new Ya.share({
 					</div>
 					<div style="text-align:right;">
 					<?php if (Yii::app()->user->level > 80 || $hole->IsUserHole) : ?>
-						<?php echo CHtml::link(CHtml::image('/images/published.png', 'Утвердить изображение и отметить яму как устраненную', Array('title'=>'Утвердить изображение и отметить яму как устраненную')), Array('approveFixedPicture','id'=>$hole->ID,'pictid'=>$picture->id), Array('class'=>'declarationBtn')); ?>
+						<?php echo CHtml::link(CHtml::image('/images/published.png', 'Утвердить изображение и отметить дефект как устраненный', Array('title'=>'Утвердить изображение и отметить дефект как устраненный')), Array('approveFixedPicture','id'=>$hole->ID,'pictid'=>$picture->id), Array('class'=>'declarationBtn')); ?>
 					<?php endif; ?>
 					
 					<?php if ($picture->user_id==Yii::app()->user->id || Yii::app()->user->level > 80 || $hole->IsUserHole) : ?>
@@ -615,7 +615,7 @@ new Ya.share({
 				'id'=>'abuseDialog',
 				// additional javascript options for the dialog plugin
 				'options'=>array(
-					'title'=>'Отправить жалобу на яму',
+					'title'=>'Отправить жалобу на дефект',
 					'autoOpen'=>$abuseModel->errors ? true : false,
 					'width'=>'auto',
 					'height'=>'auto',
