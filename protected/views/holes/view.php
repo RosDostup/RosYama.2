@@ -380,7 +380,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 												
 						<? if(Yii::app()->params['gibddOn'] && $hole->request_gibdd && !$hole->request_gibdd->answers): ?>
 							<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'), array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>						
-						<? elseif($hole->request_gibdd && $hole->request_gibdd->answers): ?>
+						<? elseif(Yii::app()->params['gibddOn'] && $hole->request_gibdd && $hole->request_gibdd->answers): ?>
 							<p><?php echo CHtml::link('Ещё ответ из ГИБДД', array('gibddreply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>						
 						<? endif; ?>
 						

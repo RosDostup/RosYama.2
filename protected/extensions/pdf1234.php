@@ -170,7 +170,7 @@ class pdf1234{
 	// жалоба в прокуратуру
 	protected function text_prosecutor(){
 		$ar['body0'] = '    '.$this->params['date2.day'].'.'.$this->params['date2.month'].'.'.$this->params['date2.year'].' мною было направлено заявление в '.$this->params['gibdd'].' об устранении повреждений дорожного покрытия по адресу: '.$this->params['street'].'.';
-		$ar['body1'] = 'По истечению 30-ти дневного срока, установленного Федеральным законом «О порядке рассмотрений обращений граждан РФ» я не получил мотивированного и обоснованного ответа по существу своего обращения. По истечении 10 дней - максимально допустимого срока, предусмотренного ГОСТ Р 50597-93 для устранения повреждений дорожного покрытия, повреждения, указанные мною, не были устранены.Таким образом, было нарушено мое право на получение своевременного и мотивированного ответа, а также право на безопасные условия движения по дорогам РФ, предусмотренное ФЗ «О безопасности дорожного движения».';
+		$ar['body1'] = 'По истечении 30-ти дневного срока, установленного Федеральным законом «О порядке рассмотрений обращений граждан РФ» я не получил мотивированного и обоснованного ответа по существу своего обращения. По истечении 10 дней - максимально допустимого срока, предусмотренного ГОСТ Р 50597-93 для устранения повреждений дорожного покрытия, повреждения, указанные мною, не были устранены.Таким образом, было нарушено мое право на получение своевременного и мотивированного ответа, а также право на безопасные условия движения по дорогам РФ, предусмотренное ФЗ «О безопасности дорожного движения».';
 		$ar['footerUP0'] = '   В связи с изложенным, прошу: ';
 		$ar['count'][1] = 'Обязать ГИБДД предоставить в мой адрес мотивированный и обоснованный ответ по существу обращения.';
 		$ar['count'][2] = 'Обязать ГИБДД принять меры к устранению указанных мною повреждений дорожного покрытия.';
@@ -212,7 +212,7 @@ class pdf1234{
 	protected function getTypeTemplate(){
 		$type=$this->temp;
 		$model=$this->models[0];
-		$ar['body0'] = '    '.$this->params['date1.day'].'.'.$this->params['date1.month'].'.'.$this->params['date1.year'].' мною на территории дороги по адресу: '.$this->params['street'].($model->description_locality && $this->requestForm && $this->requestForm->showDescriptions ? ', '.$model->description_locality : '')." (долгота: $model->LONGITUDE, широта: $model->LATITUDE, ".Yii::app()->request->hostInfo.CController::createUrl('/holes/view', Array('id'=>$model->ID)).")";
+		$ar['body0'] = '    '.$this->params['date1.day'].'.'.$this->params['date1.month'].'.'.$this->params['date1.year'].' мною '.(Yii::app()->params->gibddOn ? 'на территории дороги' : '').' по адресу: '.$this->params['street'].($model->description_locality && $this->requestForm && $this->requestForm->showDescriptions ? ', '.$model->description_locality : '')." (долгота: $model->LONGITUDE, широта: $model->LATITUDE, ".Yii::app()->request->hostInfo.CController::createUrl('/holes/view', Array('id'=>$model->ID)).")";
 			$regex = "#{descr}(.*?){/descr}#s";
 			$type->pdf_body = preg_replace_callback(
 				$regex,

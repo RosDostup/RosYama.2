@@ -656,7 +656,7 @@ class HolesController extends Controller
 				if ($request->form_type == 'prosecutor')
 					$date3 = strtotime($request->application_data);
 					
-				$date2 = ($request->form_type == 'prosecutor' || $request->form_type == 'prosecutor2') && $model->request_gibdd ? $model->request_gibdd->date_sent  : time();
+				$date2 = ($request->form_type == 'prosecutor' || $request->form_type == 'prosecutor2') && !empty($model->request_gibdd) ? $model->request_gibdd->date_sent  : time();
 				$_data = array
 				(
 					'chief'       => $request->to,
