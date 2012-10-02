@@ -19,7 +19,7 @@ $this->breadcrumbs=array(
                 array(
                     'name'=>'owner_id',
                     'htmlOptions'=>array('width'=>50),
-                    'header'=>'ID ямы'
+                    'header'=>'ID дефекта'
                 ),
                 array(
                     'header'=>Yii::t('CommentsModule.msg', 'User Name'),
