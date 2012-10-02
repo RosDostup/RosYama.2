@@ -193,7 +193,7 @@ class ProfileController extends Controller
       	if (isset($_POST['i'])) $this->renderPartial('_area_point_fields',array('shape'=>new UserAreaShapes, 'i'=>$_POST['i'], 'form'=>new CActiveForm));
 	}
 	
-	//сохрание списка ям в избраное
+	//сохрание списка дефектов в избраное
 	public function actionSaveHoles2Selected($id, $holes)
 	{
 		if ($id){
@@ -212,7 +212,7 @@ class ProfileController extends Controller
 		$p[0]->actionSelectHoles(false);		
 	}	
 	
-	//удаление списка ям
+	//удаление списка дефектов
 	public function actionDelHolesSelectList($id)
 	{
 		$model=UserSelectedLists::model()->findByPk((int)$id);	

@@ -78,7 +78,7 @@ $this->pageTitle=Yii::app()->name . ' :: Мой участок';
 )); ?>			
 			<?php echo $form->dropDownList($model, 'TYPE_ID', CHtml::listData( HoleTypes::model()->findAll(Array('condition'=>'published=1', 'order'=>'ordering')), 'id','name'), array('prompt'=>'Тип дефекта')); ?>
 			<?php echo $form->dropDownList($model, 'STATE', $model->Allstates, array('prompt'=>'Статус дефекта')); ?>
-			<?php echo $form->dropDownList($model, 'showUserHoles', Array(1=>'Мои ямы', 2=>'Чужие, на которые я отправил заявление'),Array('prompt'=>'Все ямы')); ?>
+			<?php echo $form->dropDownList($model, 'showUserHoles', Array(1=>'Добавленные мной дефекты', 2=>'Чужие, на которые я отправил заявление'),Array('prompt'=>'Все дефекты')); ?>
 			<?php echo CHtml::submitButton('Найти'); ?><br/>
 			<div style="text-align:right;">
 			<?php echo CHtml::checkBox('selectAll', false, Array('id'=>'selectAll','class'=>'state_check')); ?><?php echo CHtml::label('Выбрать все', 'selectAll'); ?>

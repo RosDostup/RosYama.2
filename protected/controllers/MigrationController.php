@@ -308,7 +308,7 @@ class MigrationController extends Controller
 			
 		}
 	}
-	echo "Добавлено $count ям.";
+	echo "Добавлено $count дефектов.";
 	}
 	
 }

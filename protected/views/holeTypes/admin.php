@@ -1,11 +1,11 @@
 <?php
 $this->breadcrumbs=array(
-	'Типы ям'=>array('index'),
+	'Типы дефектов'=>array('index'),
 	'Управление',
 );
 
 $this->menu=array(
-	array('label'=>'Создать тип ямы', 'url'=>array('create')),
+	array('label'=>'Создать тип дефекта', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -22,7 +22,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Управление типами ям</h1>
+<h1>Управление типами дефектов</h1>
 
 <?php $this->widget('zii.widgets.jui.CJuiSortable', array('items'=>array(), 'options'=>array(),)); ?>
 <?php // sortable script

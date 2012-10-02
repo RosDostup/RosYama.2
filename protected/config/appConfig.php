@@ -91,10 +91,9 @@ $params=array(
 
 		// this is used in contact page
 		'adminEmail'=>'admin@rosdostup.ru',
-
-		//Yandex map's key
 		'YMapKey'=>'AKtzDVABAAAAbnnpfAIAZPFgkjAuQV52QNsahNkE7plr4F0AAAAAAAAAAAAyrGSHDyaYbEfL1i8AVZDhjT4VHQ==',
-        	'gibddOn' => false, // True, если ГИБДД участвует в форме дефекта; false, если она исключается из формы
+        'gibddOn' => false, // True, если ГИБДД участвует в форме дефекта; false, если она исключается из формы
+		//'layout'=>'startpage',
 	);		
 
 ?>
