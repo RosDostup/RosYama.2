@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="language" content="ru" />
-<meta name="copyright" content="rosdostup" />
+<meta name="copyright" content="<?=Yii::app()->params->copyright;?>" />
 <meta name="robots" content="index, follow" />
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -41,7 +41,7 @@
 				array('label'=>'Нормативы', 'url'=>array('/site/page', 'view'=>'regulations')),
 				array('label'=>'Статистика', 'url'=>array('/statics/index')),
 				array('label'=>'FAQ', 'url'=>array('/site/page', 'view'=>'faq')),
-				array('label'=>'Справочники', 'url'=>array('/sprav/index')),
+//				array('label'=>'Справочники', 'url'=>array('/sprav/index')), // Намеренно убрано для Росдоступа
 				//array('label'=>'Logout ('.$this->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!$this->user->isGuest)
 			),
 			'htmlOptions'=>array('class'=>'menu'),

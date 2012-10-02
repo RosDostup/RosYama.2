@@ -1,7 +1,7 @@
 <?
 $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 ?>
-<div id="addmess" style="display:none; color:#0C0"><p><b>Выберите место на карте и кликните по нему два раза, чтобы отметить расположение ямы.</b></p></div>
+<div id="addmess" style="display:none; color:#0C0"><p><b>Выберите место на карте и кликните по нему два раза, чтобы отметить расположение дефекта.</b></p></div>
   <div class="head">
 		<div class="container">
 <div class="lCol">
@@ -36,7 +36,7 @@ $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 <br />
 <div class="chekboxes" style="float:right;">
 <?php echo $form->checkBox($model,"archive",Array('class'=>'filter_checkbox')); ?>	
-<?php echo $form->labelEx($model,'archive',Array('label'=>'Показывать ямы из архива', 'class'=>'archive')); ?>
+<?php echo $form->labelEx($model,'archive',Array('label'=>'Показывать дефекты из архива', 'class'=>'archive')); ?>
 
 </div>
 
@@ -56,7 +56,7 @@ $this->pageTitle=Yii::app()->name . ' :: Карта дефектов';
 	</div>
 	<div class="mainCols">
 			
-<div id="addmess" style="display:none; color:#0C0"><p><b>Выберите место на карте и кликните по нему два раза, чтобы отметить расположение ямы.</b></p></div>
+<div id="addmess" style="display:none; color:#0C0"><p><b>Выберите место на карте и кликните по нему два раза, чтобы отметить расположение дефекта.</b></p></div>
 
 <div class="bx-yandex-search-layout">
 	<div class="bx-yandex-search-form">
