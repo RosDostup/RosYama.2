@@ -30,7 +30,7 @@ class html1234 extends pdf1234
 			}
 		}
 		
-		// Обработка и вывод картинок на много дефектов
+		// Обработка и вывод картинок на многодефектов
 		if ($this->models && $printAllPictures)
 			foreach($this->models as $model){
 				echo '<h3>'.$model->ADDRESS.'</h3>';

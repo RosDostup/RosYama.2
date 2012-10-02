@@ -66,8 +66,8 @@ $MESS['HOLE_CART_ADMIN_TEXT_15'] = 'Напечатать заявление';
 $MESS['HOLE_CART_ADMIN_TEXT_16'] = 'Если дефект не устранён';
 $MESS['HOLE_CART_ADMIN_TEXT_OR'] = 'или';
 
-$MESS['HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'] = 'Получен ответ из ГИБДД';
-$MESS['HOLE_GIBDDREPLY'] = 'Ответ из ГИБДД';
+$MESS['HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'] = Yii::app()->params->gibddOn ? 'Получен ответ из ГИБДД' : 'Получен ответ из местных органов власти';
+$MESS['HOLE_GIBDDREPLY'] = Yii::app()->params->gibddOn ? 'Ответ из ГИБДД' : 'Ответ из местных органов власти';
 
 if(Yii::app()->params->gibddOn)
     $MESS['HOLE_PROSECUTOR_FORM_PREFACE'] = '<p>В связи с тем, что ГИБДД может проигнорировать ваше обращение или ограничиться разнообразными формальными отписками, мы не можем предоставить вам образец универсального заявления в прокуратуру, который содержал бы в себе все возможные варианты жалоб.</p>

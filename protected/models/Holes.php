@@ -89,7 +89,7 @@ class Holes extends CActiveRecord
 			array('USER_ID, STATE, DATE_CREATED, DATE_SENT, DATE_STATUS, ADR_SUBJECTRF, DATE_SENT_PROSECUTOR', 'length', 'max'=>10),
 			array('ADR_CITY', 'length', 'max'=>50),
 			array('STR_SUBJECTRF, username, description_locality, description_size', 'length'),
-			array((Yii::app()->params['gibddOn'] ? 'COMMENT1, COMMENT2, COMMENT_GIBDD_REPLY, deletepict, upploadedPictures, request_gibdd, showUserHoles' : 'COMMENT1, COMMENT2, COMMENT_GIBDD_REPLY, deletepict, upploadedPictures, showUserHoles'), 'safe'),
+			array('COMMENT1, COMMENT2, COMMENT_GIBDD_REPLY, deletepict, upploadedPictures, request_gibdd, showUserHoles', 'safe'),
 			array('upploadedPictures', 'file', 'types'=>'jpg, jpeg, png, gif','maxFiles'=>10, 'allowEmpty'=>true, 'on' => 'update, import, fix'),
 			array('upploadedPictures', 'file', 'types'=>'jpg, jpeg, png, gif','maxFiles'=>10, 'allowEmpty'=>false, 'on' => 'insert'),
 			array('upploadedPictures', 'unsafe', 'on' => 'add'),
@@ -128,12 +128,12 @@ class Holes extends CActiveRecord
 			'selected_lists'=>array(self::MANY_MANY, 'UserSelectedLists',
                '{{user_selected_lists_holes_xref}}(hole_id,list_id)'),
             'comments_cnt'=> array(self::STAT, 'Comment', 'owner_id', 'condition'=>'owner_name="Holes" AND status < 2'),   
-            'comments'=> array(self::HAS_MANY, 'Comment', 'owner_id', 'condition'=>'owner_name="Holes"'), 
+            'comments'=> array(self::HAS_MANY, 'Comment', 'owner_id', 'condition'=>'owner_name="Holes"'),
+            'request_gibdd' => array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'condition'=>'request_gibdd.type="gibdd" AND request_gibdd.user_id='.Yii::app()->user->id),
+            'requests_gibdd' => array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'condition'=>'requests_gibdd.type="gibdd"','order'=>'requests_gibdd.date_sent ASC'),
 		);
 
         if(Yii::app()->params['gibddOn']) {
-            $relations['request_gibdd'] = array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'condition'=>'request_gibdd.type="gibdd" AND request_gibdd.user_id='.Yii::app()->user->id);
-            $relations['requests_gibdd'] = array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'condition'=>'requests_gibdd.type="gibdd"','order'=>'requests_gibdd.date_sent ASC');
             $relations['gibdd'] = array(self::BELONGS_TO, 'GibddHeads', 'gibdd_id');
         }
         return $relations;
@@ -148,10 +148,10 @@ class Holes extends CActiveRecord
 	{
 	$arr=Array();
 	$arr['fresh']      = 'Добавлен на сайт';
-	$arr['inprogress'] = 'Заявление отправлено в ГИБДД';
+	$arr['inprogress'] = Yii::app()->params->gibddOn ? 'Заявление отправлено в ГИБДД' : 'Заявление отправлено в местные органы власти';
 	$arr['fixed']      = 'Исправлен';
 	$arr['achtung']    = 'Просрочен';
-	$arr['gibddre']    = 'Получен ответ из ГИБДД';
+	$arr['gibddre']    = Yii::app()->params->gibddOn ? 'Получен ответ из ГИБДД' : 'Получен ответ из местных органов власти';
 	$arr['prosecutor'] = 'Жалоба отправлена в прокуратуру';
 	return $arr;
 	}
@@ -509,7 +509,7 @@ class Holes extends CActiveRecord
 						}
 					}
 				}
-			$this->archive=0;	
+			$this->archive=0;
 			if ($this->update()) return true;
 			else return false;
 		}	
@@ -517,23 +517,21 @@ class Holes extends CActiveRecord
 	
 	public function updateRevoke()
 	{
-        if(!Yii::app()->params['gibddOn'] || (!$this->request_gibdd || $this->request_gibdd->answer))
-				{
-					return false;	
-				}
-				$this->DATE_STATUS = time();
-				$this->request_gibdd->delete();
-				if (!count(HoleRequests::model()->findAll('hole_id='.$this->ID.' AND type="gibdd"'))) {
-					$this->DATE_SENT = null;
-					$this->DATE_STATUS = time();
-					$this->STATE = 'fresh';
-					}
-				else {
-					$this->DATE_SENT = $this->requests_gibdd[0]->date_sent;
-				}	
-			$this->archive=0;	
-			if ($this->update()) return true;
-			else return false;
+        if(empty($this->request_gibdd) || $this->request_gibdd->answer)
+            return false;	
+        $this->DATE_STATUS = time();
+        $this->request_gibdd->delete();
+        if (!count(HoleRequests::model()->findAll('hole_id='.$this->ID.' AND type="gibdd"'))) {
+            $this->DATE_SENT = null;
+            $this->DATE_STATUS = time();
+            $this->STATE = 'fresh';
+        }
+        else {
+            $this->DATE_SENT = $this->requests_gibdd[0]->date_sent;
+        }
+        $this->archive=0;	
+        if ($this->update()) return true;
+        else return false;
 	}		
 	
 	
