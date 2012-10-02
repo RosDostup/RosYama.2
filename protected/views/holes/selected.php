@@ -1,5 +1,5 @@
 <?
-$this->pageTitle=Yii::app()->name . ' :: Мои дефекты';
+$this->pageTitle=Yii::app()->name . ' :: Добавленные мной дефекты';
 ?>
 <?php Yii::app()->clientScript->registerScript('select_holes','			
 			function selectHoles(arr,del){
@@ -123,7 +123,7 @@ $this->pageTitle=Yii::app()->name . ' :: Мои дефекты';
 )); ?>			
 			<?php echo $form->dropDownList($model, 'TYPE_ID', CHtml::listData( HoleTypes::model()->findAll(Array('condition'=>'published=1', 'order'=>'ordering')), 'id','name'), array('prompt'=>'Тип дефекта')); ?>
 			<?php echo $form->dropDownList($model, 'STATE', $model->Allstates, array('prompt'=>'Статус дефекта')); ?>
-			<?php echo $form->dropDownList($model, 'showUserHoles', Array('3'=>'Все дефекты', 1=>'Мои дефекты', 2=>'Чужие, на которые я отправил заявление')); ?>
+			<?php echo $form->dropDownList($model, 'showUserHoles', Array('3'=>'Все дефекты', 1=>'Добавленные мной дефекты', 2=>'Чужие, на которые я отправил заявление')); ?>
 			<?php echo CHtml::submitButton('Найти'); ?><br/>
 			
 	<?php $this->endWidget(); ?>		
