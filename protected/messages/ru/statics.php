@@ -1,6 +1,6 @@
 <?php
-$MESS['HOLES_STATISTICS_NAME']        = 'Статистика обращений';
-$MESS['HOLES_STATISTICS_DESCRIPTION'] = 'Статистика обращений';
+$MESS['HOLES_STATISTICS_NAME']        = 'Статистика дефектов';
+$MESS['HOLES_STATISTICS_DESCRIPTION'] = 'Статистика дефектов';
 $MESS['MAX_STRINGS'] = 'Максимальное колличество записей, выводимое по каждому пункту';
 $MESS['YEAR1'] = 'лет';
 $MESS['YEAR2'] = 'года';

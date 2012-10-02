@@ -1,13 +1,13 @@
 <?php
 $MESS['HOLE_TYPE_badroad']    = 'Разбитая дорога';
-$MESS['HOLE_TYPE_holeonroad'] = 'Яма на дороге';
+$MESS['HOLE_TYPE_holeonroad'] = 'Дефект на дороге';
 $MESS['HOLE_TYPE_hatch']      = 'Люк';
 $MESS['HOLE_TYPE_crossing']   = 'Переезд';
 $MESS['HOLE_TYPE_nomarking']  = 'Отсутствие разметки';
 $MESS['HOLE_TYPE_rails']      = 'Рельсы';
 $MESS['HOLE_TYPE_policeman']  = 'Лежачий полицейский';
 $MESS['HOLE_TYPE_fence']      = 'Ограждение';
-$MESS['HOLE_TYPE_holeinyard'] = 'Яма во дворе';
+$MESS['HOLE_TYPE_holeinyard'] = 'Дефект во дворе';
 $MESS['HOLE_TYPE_light']      = 'Светофор';
 $MESS['HOLE_REQUEST_SENT']    = Yii::app()->params->gibddOn ? 'отправлен запрос в ГИБДД' : 'отправлен запрос в местные органы власти';
 $MESS['HOLE_ITWAS']           = 'Было';
@@ -43,8 +43,8 @@ $MESS['HOLE_REQUEST_FORM_SIGNATURE_COMMENT']   = 'Фамилия в именит
 $MESS['HOLE_REQUEST_FORM_SUBMIT']              = 'Сгенерировать PDF-файл';
 $MESS['HOLE_REQUEST_FORM_SUBMIT2']             = 'Текст заявления в HTML';
 $MESS['HOLE_REQUEST_FORM_SHOW_DESCRIPTIONS']            = 'Выводить описание дефекта и описание местоположения';
-$MESS['HOLE_REQUEST_FORM_SHOW_DESCRIPTIONS_COMMENT']            = 'Снимите отметку если не нужно выводить описания дефекта и местоположения, указанные вами при добавлении ямы';
-$MESS['HOLE_REQUEST_FORM_PRINT_PICTURES']            = 'Выводить изображения к ямам';
+$MESS['HOLE_REQUEST_FORM_SHOW_DESCRIPTIONS_COMMENT']            = 'Снимите отметку если не нужно выводить описания дефекта и местоположения, указанные вами при добавлении дефекта';
+$MESS['HOLE_REQUEST_FORM_PRINT_PICTURES']            = 'Выводить изображения к дефектам';
 $MESS['HOLE_REQUEST_FORM_PRINT_PICTURES_COMMENT']            = 'Отметьте, если нужно выводить изображения';
 
 $MESS['HOLE_CART_ADMIN_TEXT_1']  = 'Пока заявление не выслано,';
@@ -66,8 +66,8 @@ $MESS['HOLE_CART_ADMIN_TEXT_15'] = 'Напечатать заявление';
 $MESS['HOLE_CART_ADMIN_TEXT_16'] = 'Если дефект не устранён';
 $MESS['HOLE_CART_ADMIN_TEXT_OR'] = 'или';
 
-$MESS['HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'] = 'Получен ответ из ГИБДД';
-$MESS['HOLE_GIBDDREPLY'] = 'Ответ из ГИБДД';
+$MESS['HOLE_CART_ADMIN_GIBDD_REPLY_RECEIVED'] = Yii::app()->params->gibddOn ? 'Получен ответ из ГИБДД' : 'Получен ответ из местных органов власти';
+$MESS['HOLE_GIBDDREPLY'] = Yii::app()->params->gibddOn ? 'Ответ из ГИБДД' : 'Ответ из местных органов власти';
 
 if(Yii::app()->params->gibddOn)
     $MESS['HOLE_PROSECUTOR_FORM_PREFACE'] = '<p>В связи с тем, что ГИБДД может проигнорировать ваше обращение или ограничиться разнообразными формальными отписками, мы не можем предоставить вам образец универсального заявления в прокуратуру, который содержал бы в себе все возможные варианты жалоб.</p>
