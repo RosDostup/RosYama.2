@@ -9,7 +9,7 @@ class pdf1234{
 	public $temp;
 	public $models=Array();
 	public $requestForm;
-	private $note;
+	protected $note;
 	
 	public function __construct(){		
 		$this->pdf = new tFPDF();
@@ -53,7 +53,7 @@ class pdf1234{
 					}
 			}
 		}
-		// Обработка и вывод картинок на многоям
+		// Обработка и вывод картинок на много дефектов
 		if ($this->models && $printAllPictures)
 			foreach($this->models as $model){
 				$this->pdf->AddPage();
@@ -170,7 +170,7 @@ class pdf1234{
 	// жалоба в прокуратуру
 	protected function text_prosecutor(){
 		$ar['body0'] = '    '.$this->params['date2.day'].'.'.$this->params['date2.month'].'.'.$this->params['date2.year'].' мною было направлено заявление в '.$this->params['gibdd'].' об устранении повреждений дорожного покрытия по адресу: '.$this->params['street'].'.';
-		$ar['body1'] = 'По истечению 30-ти дневного срока, установленного Федеральным законом «О порядке рассмотрений обращений граждан РФ» я не получил мотивированного и обоснованного ответа по существу своего обращения. По истечении 10 дней - максимально допустимого срока, предусмотренного ГОСТ Р 50597-93 для устранения повреждений дорожного покрытия, повреждения, указанные мною, не были устранены.Таким образом, было нарушено мое право на получение своевременного и мотивированного ответа, а также право на безопасные условия движения по дорогам РФ, предусмотренное ФЗ «О безопасности дорожного движения».';
+		$ar['body1'] = 'По истечении 30-ти дневного срока, установленного Федеральным законом «О порядке рассмотрений обращений граждан РФ» я не получил мотивированного и обоснованного ответа по существу своего обращения. По истечении 10 дней - максимально допустимого срока, предусмотренного ГОСТ Р 50597-93 для устранения повреждений дорожного покрытия, повреждения, указанные мною, не были устранены.Таким образом, было нарушено мое право на получение своевременного и мотивированного ответа, а также право на безопасные условия движения по дорогам РФ, предусмотренное ФЗ «О безопасности дорожного движения».';
 		$ar['footerUP0'] = '   В связи с изложенным, прошу: ';
 		$ar['count'][1] = 'Обязать ГИБДД предоставить в мой адрес мотивированный и обоснованный ответ по существу обращения.';
 		$ar['count'][2] = 'Обязать ГИБДД принять меры к устранению указанных мною повреждений дорожного покрытия.';
@@ -187,7 +187,7 @@ class pdf1234{
 		return $ar;
 	}
 	
-	// заявление на многоям
+	// заявление на много дефектов
 	protected function text_manyholes($models){
 		$ar['body0'] = '    '.$this->params['date1.day'].'.'.$this->params['date1.month'].'.'.$this->params['date1.year'].' мною было обнаружено несколько повреждений дорожного покрытия, размеры каждого из которых превышают нормативы, установленные ГОСТ Р 505097-93, и которые могут представлять серьёзную опасность для дорожного движения. Ниже список адресов, описаний и ссылок на фотографии обнаруженных мной повреждений. ';
 		$ar['body1'] = '';
@@ -208,11 +208,11 @@ class pdf1234{
 			else return $matches[1];
 		}	
 
-	//универсальный шаблон для типов ям
+	//универсальный шаблон для типов дефектов
 	protected function getTypeTemplate(){
 		$type=$this->temp;
 		$model=$this->models[0];
-		$ar['body0'] = '    '.$this->params['date1.day'].'.'.$this->params['date1.month'].'.'.$this->params['date1.year'].' мною на территории дороги по адресу: '.$this->params['street'].($model->description_locality && $this->requestForm && $this->requestForm->showDescriptions ? ', '.$model->description_locality : '')." (долгота: $model->LONGITUDE, широта: $model->LATITUDE, ".Yii::app()->request->hostInfo.CController::createUrl('/holes/view', Array('id'=>$model->ID)).")";
+		$ar['body0'] = '    '.$this->params['date1.day'].'.'.$this->params['date1.month'].'.'.$this->params['date1.year'].' мною11111 '.(Yii::app()->params->gibddOn ? 'на территории дороги' : '').' по адресу: '.$this->params['street'].($model->description_locality && $this->requestForm && $this->requestForm->showDescriptions ? ', '.$model->description_locality : '')." (долгота: $model->LONGITUDE, широта: $model->LATITUDE, ".Yii::app()->request->hostInfo.CController::createUrl('/holes/view', Array('id'=>$model->ID)).")";
 			$regex = "#{descr}(.*?){/descr}#s";
 			$type->pdf_body = preg_replace_callback(
 				$regex,
