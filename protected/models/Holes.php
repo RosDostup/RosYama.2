@@ -131,11 +131,8 @@ class Holes extends CActiveRecord
             'comments'=> array(self::HAS_MANY, 'Comment', 'owner_id', 'condition'=>'owner_name="Holes"'),
             'request_gibdd' => array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'condition'=>'request_gibdd.type="gibdd" AND request_gibdd.user_id='.Yii::app()->user->id),
             'requests_gibdd' => array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'condition'=>'requests_gibdd.type="gibdd"','order'=>'requests_gibdd.date_sent ASC'),
+            'gibdd' => array(self::BELONGS_TO, 'GibddHeads', 'gibdd_id'),
 		);
-
-        if(Yii::app()->params['gibddOn']) {
-            $relations['gibdd'] = array(self::BELONGS_TO, 'GibddHeads', 'gibdd_id');
-        }
         return $relations;
 	}
 	
