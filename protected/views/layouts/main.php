@@ -128,9 +128,7 @@
 
 	<script type="text/javascript">
                 var reformalOptions = {
-			//project_id: 71829,
                         project_id: <?php echo Yii::app()->params['reformal_prj_id'] ?>,
-                        //project_host: "rosdostup.reformal.ru",
 			project_host: "<?php echo Yii::app()->params['reformal_prj_host'];?>",
                         force_new_window: false,
                         tab_alignment: "left",
@@ -149,7 +147,7 @@
 
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-21943923-3']);
+	  _gaq.push(['_setAccount', '<?php echo Yii::app()->params["ganalytics_acc"] ?>']);
 	  _gaq.push(['_trackPageview']);
 
 	  (function() {

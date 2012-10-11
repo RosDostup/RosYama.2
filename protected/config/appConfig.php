@@ -89,6 +89,9 @@ $params=array(
 		// For copyright meta in header
 		'copyright' => 'РосДоступ',
 
+		// Google analytics
+		'ganalytics_acc' => '----',
+
 		// this is used in contact page
 		'adminEmail'=>'admin@rosdostup.ru',
 
