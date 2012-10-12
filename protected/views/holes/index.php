@@ -239,12 +239,11 @@ EOD
 		<?php $this->endWidget(); ?>
 </div>
 
-<table style="background-color: rgb(241, 109, 126)"> 
+<table style="background-color: rgb(255, 255, 255)"> 
   <tbody> 
     <tr><td style="padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px"> <b> 
       <p>Сбор средств на развитие проекта «<?=Yii::app()->name;?>»:</p>
-        <p>Яндекс-деньги: 41001550415485</p>
-        <p><a href="/page/donations/">Подробнее</a></p>
+        <p>RBK-деньги: RU346768273</p>
       </b>
     </td></tr>
   </tbody>
