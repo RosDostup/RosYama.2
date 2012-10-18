@@ -113,16 +113,16 @@
 
 		<div class="container">
 		<div class="left_footer">
-			<br/>Powered by <a href="http://www.yiiframework.com/" target="_blank">Yii Framework</a>
 		</div>
 		<div class="center_footer">
 			<?php if($this->beginCache('countHoles', array('duration'=>3600))) { ?>
 			<?php $this->widget('application.widgets.collection.collectionWidget'); ?>
 			<?php $this->endCache(); } ?>
+			<br/>Сайт создан на базе проекта  <a href="http://rosyama.ru" target="_blank">«РосЯма»</a> при поддержке <a href="http://te-st.ru" target="_blank">Теплицы социальных технологий</a>
 		</div>
 		<div class="right_footer">
-		</div>
-
+			<a title="Теплица социальных технологий – краудсорсинг, технологии для третьего сектора" href="http://te-st.ru/"><img title="Теплица социальных технологий – краудсорсинг, технологии для третьего сектора" src="http://te-st.ru/wp-content/uploads/white-logo-100x50.png" alt="Теплица социальных технологий – краудсорсинг, технологии для третьего сектора" width="100" height="50" /></a>
+			<a target="_blank" href="http://www.perspektiva-inva.ru"><img src="http://www.perspektiva-inva.ru/files/banner/rooi-perspektiva_88x31_v1.png" alt="РООИ Перспектива. Открываем новые возможности" width="88" height="31" /></a>
 		</div>
 	</div>
 
